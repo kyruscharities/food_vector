@@ -1,0 +1,10 @@
+= simple_form_for(@geographic_data_point) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :geo_region_id
+    = f.input :type,
+    = f.input :data
+
+  .form-actions
+    = f.button :submit

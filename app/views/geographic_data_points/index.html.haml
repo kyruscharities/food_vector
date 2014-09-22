@@ -1,0 +1,23 @@
+%h1 Listing geographic_data_points
+
+%table
+  %tr
+    %th Geo region
+    %th Type,
+    %th Data
+    %th
+    %th
+    %th
+
+  - @geographic_data_points.each do |geographic_data_point|
+    %tr
+      %td= geographic_data_point.geo_region_id
+      %td= geographic_data_point.type,
+      %td= geographic_data_point.data
+      %td= link_to 'Show', geographic_data_point
+      %td= link_to 'Edit', edit_geographic_data_point_path(geographic_data_point)
+      %td= link_to 'Destroy', geographic_data_point, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Geographic data point', new_geographic_data_point_path
