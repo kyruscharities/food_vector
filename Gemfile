@@ -17,6 +17,7 @@ gem 'simple_form'
 gem 'rails_12factor', group: :production
 gem 'pg', group: :production
 gem 'inherited_resources'
+gem 'rest-client'
 
 group :development do
   gem 'better_errors'
