@@ -5,29 +5,32 @@
 
 %section
   .col-md-12
-    %p#notice= notice
-
-    %p
-      %b Name:
+    %h2.page-header
       = @analysis.name
-    %p
-      %b Description:
-      = @analysis.description
-    %p
-      %b User:
-      = User.find(@analysis.user_id).email
-    %p
-      %b Geo region:
-      = @analysis.geo_region.id
-    %p
-      %b Resolution (mi):
-      = @analysis.resolution_mi
+      %span.pull-right
+        = link_to 'Re-analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary' if @analysis.analyzed_at?
 
-    %h2 Results
-    - if @analysis.analyzed_at == nil
-      .alert.alert-info
-        This analysis is currently being analyzed
-    - else
+    %p.lead= @analysis.description
+
+    .row
+      .col-xs-10
+        %p
+          %b Region of interest:
+          = lat_lon *@analysis.nw
+          to
+          = lat_lon *@analysis.se
+
+        %p
+          %b Resolution (mi):
+          = @analysis.resolution_mi
+
+      .col-xs-2
+        - unless @analysis.analyzed_at?
+          .alert.alert-info.text-center
+            %i.fa.fa-4x.fa-spinner.fa-spin
+            Analyzing
+
+    - if @analysis.analyzed_at?
       %p
         %b Analyzed at:
         = @analysis.analyzed_at
@@ -46,7 +49,6 @@
       -#    There are no unhealthy food sources in this geo region.
       -#  - else
       -#    = @analysis.located_unhealthy_food_sources.count
-      = link_to 'Re-analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
 
-%div{style: 'width: 800px;'}
-  #map{style: 'width: 800px; height: 400px;'}
+      %div{style: 'width: 800px;'}
+        #map{style: 'width: 800px; height: 400px;'}

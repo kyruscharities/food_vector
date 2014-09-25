@@ -22,6 +22,7 @@ class AnalysisWorker
         region.save!
 
         analysis.update! analyzed_at: Time.now
+        Rails.logger.info "Analysis ##{analysis.id} completed at #{analysis.analyzed_at}"
       end
     end
   end

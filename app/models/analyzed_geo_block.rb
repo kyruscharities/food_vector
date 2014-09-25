@@ -13,4 +13,3 @@ class AnalyzedGeoBlock < ActiveRecord::Base
     super(options)
   end
 end
-

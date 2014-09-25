@@ -23,6 +23,14 @@ class Analysis < ActiveRecord::Base
     located_food_sources.includes(:food_source).where(food_source: {healthy: false})
   end
 
+  def nw
+    [geo_region.nw_lat, geo_region.nw_lon]
+  end
+
+  def se
+    [geo_region.se_lat, geo_region.se_lon]
+  end
+
   def clear_analysis_results!
     analyzed_geo_blocks.delete_all
     located_food_sources.delete_all
