@@ -1,0 +1,2 @@
+module GeographicDataPointsHelper
+end

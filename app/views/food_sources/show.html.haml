@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Business name:
+  = @food_source.business_name
+
+= link_to 'Edit', edit_food_source_path(@food_source)
+\|
+= link_to 'Back', food_sources_path

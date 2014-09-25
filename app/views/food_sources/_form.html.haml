@@ -1,0 +1,8 @@
+= simple_form_for(@food_source) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :business_name
+
+  .form-actions
+    = f.button :submit

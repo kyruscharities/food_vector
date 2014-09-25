@@ -1,0 +1,18 @@
+= simple_form_for(@analysis) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :description
+    = f.association :user, label_method: :email
+
+    = f.simple_fields_for :geo_region do |gr|
+      = gr.input :nw_lat, as: :numeric
+      = gr.input :nw_lon, as: :numeric
+      = gr.input :se_lat, as: :numeric
+      = gr.input :se_lon, as: :numeric
+
+    = f.input :resolution_mi, label: 'Analysis Resolution (mi)'
+
+  .form-actions
+    = f.button :submit
