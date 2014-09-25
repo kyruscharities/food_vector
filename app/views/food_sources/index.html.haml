@@ -13,17 +13,14 @@
       %table.table.table-bordered.table-striped
         %tr
           %th Business name
-          %th
-          %th
+          %th Healthy
           %th
 
         - @food_sources.each do |food_source|
           %tr
             %td= food_source.business_name
-            %td= link_to 'Show', food_source
-            %td= link_to 'Edit', edit_food_source_path(food_source)
-            %td= link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-      %br
-
-      = link_to 'New Food source', new_food_source_path
+            %td= food_source.healthy
+            %td
+              = link_to 'Show', food_source
+              = link_to 'Edit', edit_food_source_path(food_source)
+              = link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
