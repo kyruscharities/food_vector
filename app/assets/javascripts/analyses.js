@@ -24,7 +24,7 @@ $(document).ready(function() {
         data: foodData,
         dissipating: false,
 //        maxIntensity: 1000,
-        radius: 0.5
+        radius: 0.01
     });
 
     heatmap.setMap(map);

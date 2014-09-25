@@ -1,5 +1,6 @@
 class FoodSourcesController < ApplicationController
   inherit_resources
+  load_and_authorize_resource
 
   private
   def food_source_params

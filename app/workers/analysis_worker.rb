@@ -6,9 +6,9 @@ class AnalysisWorker
 
     # TODO: run in parallel?
     regions = GeoRegionSplitter.split(analysis.geo_region, analysis.resolution_mi)
-    regions.each do |region|
+    regions.each_with_index do |region, index|
       # TODO: actually calculate risk score
-      risk_score = 0.0
+      risk_score = index * rand(0..10)
 
       AnalyzedGeoBlock.transaction do
         result = AnalyzedGeoBlock.new(

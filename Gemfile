@@ -25,6 +25,8 @@ gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem 'dotenv-deployment'
+gem 'rolify'
+gem 'cancan'
 
 group :development do
   gem 'better_errors'
