@@ -34,14 +34,17 @@ class Analysis < ActiveRecord::Base
   end
 
   def convertAnalyzedToLatLon()
+    analyzed_geo_blocks
+=begin
     latLons = []
     analyzed_geo_blocks.each do |block|
-      cp = block.geo_region.center_point
+      cp = block.geo_region.center_point,
       block.risk_score.to_i.times do
         latLons << cp
       end
     end
     latLons
+=end
   end
 
   def generate_fake_data_points(num_points)

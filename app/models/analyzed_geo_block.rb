@@ -7,5 +7,10 @@ class AnalyzedGeoBlock < ActiveRecord::Base
   validates_presence_of :risk_score
 
   has_many :geographic_data_points
+
+  def as_json(options = {})
+    options.merge! include: :geo_region
+    super(options)
+  end
 end
 
