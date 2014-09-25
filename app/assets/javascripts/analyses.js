@@ -25,7 +25,7 @@ $(document).ready(function() {
      */
     var mapOptions = {
         zoom: 13,
-        center: new google.maps.LatLng(center_point[:lat], center_point[:lon]),
+        center: new google.maps.LatLng(center_point.lat, center_point.lon),
         mapTypeId: google.maps.MapTypeId.MAP
     };
 
