@@ -16,11 +16,13 @@ class Analysis < ActiveRecord::Base
   has_many :located_food_sources
 
   def located_healthy_food_sources
-    located_food_sources.where('healthy = ?', true)
+    # located_food_sources.where('healthy = ?', true)
+    []
   end
 
   def located_unhealthy_food_sources
-    located_food_sources.where('healthy = ?', false)
+    # located_food_sources.where('healthy = ?', false)
+    []
   end
 
   scope :located_healthy_food_sources, -> { where('located_food_sources.healthy = ?', true) }
