@@ -15,6 +15,9 @@ gem 'devise'
 gem 'haml-rails'
 gem 'puma'
 gem 'simple_form'
+gem 'rails_12factor', group: :production
+gem 'pg', group: :production
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
