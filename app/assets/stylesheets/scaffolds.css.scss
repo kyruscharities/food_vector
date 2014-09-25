@@ -30,6 +30,10 @@ div {
   color: green;
 }
 
+.alert-error {
+  @extend .alert-danger;
+}
+
 .field_with_errors {
   padding: 2px;
   background-color: red;

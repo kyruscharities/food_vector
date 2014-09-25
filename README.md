@@ -1,28 +1,8 @@
-Analysis
-- belongs_to User
-- has_many healthy_food_sources, class: FoodSource
-- has_many unhealthy_food_sources, class: FoodSource
-- geo_region
-- resolution
-- has_many analyzed_geo_blocks
-- has_many located_healthy_food_sources
-- has_many located_unhealthy_food_sources
+# Getting Started
 
-AnalyzedGeoBlock
-geo_region
-risk_score
-has_many geographic_data_point (contributing factors)
+    bundle install
+    bundle exec rake db:setup
 
-FoodSource
-business_name
-
-LocatedFoodSource
-business_name
-healthy?
-lat
-lon
-
-GeographicDataPoint
-geo_region
-type (census data, health data)
-data
+    # want the example users?
+    bundle exec rake dev:setup
+    ... now you have user@foo.com and admin@foo.com (password = password)

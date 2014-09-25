@@ -14,11 +14,16 @@
  *= require_tree .
  *= require_self
  */
+@import 'bootstrap';
 
 body.food_sources.index {
   li.food-source {
     padding: 10px 0;
   }
+}
+
+.flash-message {
+  margin-top: 20px;
 }
 
 .no-margin {
@@ -27,4 +32,24 @@ body.food_sources.index {
 
 form .form-group label.checkbox {
   margin-left: 20px;
+}
+
+.login-form {
+  .password.form-group {
+    position: relative;
+
+    .forgot {
+      position: absolute;
+      top: 16px;
+      right: 11px;
+      color: #00a5d5;
+      font-size: 12px;
+      -webkit-font-smoothing: antialiased;
+      cursor: pointer;
+    }
+  }
+
+  input.submit {
+    width: 100%;
+  }
 }
