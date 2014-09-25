@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925192508) do
+ActiveRecord::Schema.define(version: 20140925213656) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20140925192508) do
     t.datetime "updated_at"
     t.integer  "analysis_id"
     t.integer  "analyzed_geo_block_id"
+    t.decimal  "center_lat"
+    t.decimal  "center_lon"
   end
 
   create_table "geographic_data_points", force: true do |t|
@@ -58,15 +60,25 @@ ActiveRecord::Schema.define(version: 20140925192508) do
   end
 
   create_table "located_food_sources", force: true do |t|
-    t.string   "business_name"
-    t.boolean  "healthy"
     t.decimal  "lat"
     t.decimal  "lon"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "analysis_id"
     t.integer  "price_rank"
+    t.integer  "food_source_id"
   end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], name: "index_roles_on_name"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -86,5 +98,12 @@ ActiveRecord::Schema.define(version: 20140925192508) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_roles", id: false, force: true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
 end

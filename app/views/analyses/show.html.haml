@@ -1,7 +1,7 @@
 - content_for :head do
   = javascript_tag do
     var center_point = #{raw @analysis.geo_region.center_point.to_json}
-    var food_data = #{raw @analysis.convertAnalyzedToLatLon.to_json}
+    var food_data = #{raw @analysis.analyzed_geo_blocks.to_json}
 
 %section
   .col-md-12
@@ -25,11 +25,8 @@
 
     %h2 Results
     - if @analysis.analyzed_at == nil
-      %p
-        %b Analyzed at:
       .alert.alert-info
-        This analysis hasn't been ran yet
-      = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
+        This analysis is currently being analyzed
     - else
       %p
         %b Analyzed at:

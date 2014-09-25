@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'analyses#index'
+  scope '/' do
+    get 'home' => 'static_pages#home'
+  end
+
+  root to: 'static_pages#home'
 
   devise_for :users
   resources :users
