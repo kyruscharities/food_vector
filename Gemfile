@@ -18,6 +18,7 @@ gem 'rails_12factor', group: :production
 gem 'pg', group: :production
 gem 'inherited_resources'
 gem 'font-awesome-rails'
+gem 'rest-client'
 
 group :development do
   gem 'better_errors'
