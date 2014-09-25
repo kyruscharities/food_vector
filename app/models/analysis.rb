@@ -16,15 +16,12 @@ class Analysis < ActiveRecord::Base
   has_many :located_food_sources
 
   def located_healthy_food_sources
-    located_food_sources.where('healthy = ?', true)
+    located_food_sources.includes(:food_source).where(food_source: {healthy: true})
   end
 
   def located_unhealthy_food_sources
-    located_food_sources.where('healthy = ?', false)
+    located_food_sources.includes(:food_source).where(food_source: {healthy: false})
   end
-
-  scope :located_healthy_food_sources, -> { where('located_food_sources.healthy = ?', true) }
-  scope :located_unhealthy_food_sources, -> { where('located_food_sources.healthy = ?', false) }
 
   def clear_analysis_results!
     analyzed_geo_blocks.delete_all
