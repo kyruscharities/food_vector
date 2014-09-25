@@ -19,6 +19,8 @@ gem 'pg', group: :production
 gem 'inherited_resources'
 gem 'font-awesome-rails'
 gem 'rest-client'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 
 group :development do
   gem 'better_errors'

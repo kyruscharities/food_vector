@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq' unless Rails.env.production?
+
   resources :geographic_data_points
 
   resources :food_sources
