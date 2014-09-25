@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resources :analyses do
     member do
-      :analyze
+      post :analyze
     end
   end
 

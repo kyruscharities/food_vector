@@ -4,13 +4,13 @@
   .form-inputs
     = f.input :name
     = f.input :description
-    = f.association :user, label_method: :email
+    = f.association :user, label_method: :email, selected: current_user
 
     = f.simple_fields_for :geo_region do |gr|
-      = gr.input :nw_lat, as: :numeric
-      = gr.input :nw_lon, as: :numeric
-      = gr.input :se_lat, as: :numeric
-      = gr.input :se_lon, as: :numeric
+      = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)'
+      = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)'
+      = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)'
+      = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)'
 
     = f.input :resolution_mi, label: 'Analysis Resolution (mi)'
 

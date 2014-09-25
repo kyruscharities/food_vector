@@ -9,6 +9,8 @@ class AnalysesController < ApplicationController
 
   def analyze
     # TODO: integrate with someone else's stuff
+    flash[:notice] = "The analysis has started analyzing."
+    redirect_to analysis_path(resource)
   end
 
   private

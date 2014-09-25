@@ -16,11 +16,13 @@
       = @analysis.geo_region_id
     %p
       %b Resolution:
-      = @analysis.resolution
+      = @analysis.resolution_mi
     %p
       %b Analysis result:
       = @analysis.analysis_result_id
 
+    = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post
+    \|
     = link_to 'Edit', edit_analysis_path(@analysis)
     \|
     = link_to 'Back', analyses_path
