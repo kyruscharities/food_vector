@@ -4,7 +4,7 @@ class Analysis < ActiveRecord::Base
   belongs_to :user
   validates_presence_of :user
 
-  belongs_to :geo_region
+  has_one :geo_region
   validates_presence_of :geo_region
   accepts_nested_attributes_for :geo_region
 

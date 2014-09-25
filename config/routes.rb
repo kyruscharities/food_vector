@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :analyzed_geo_blocks
 
-  resources :analyses do
+  resources :analyses, except: [:edit] do
     member do
       post :analyze
     end
