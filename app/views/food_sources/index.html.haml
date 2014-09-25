@@ -1,19 +1,29 @@
-%h1 Listing food_sources
+%section
+  .col-md-12
+    %h1.page-header
+      Food sources
+      %span.pull-right
+        = link_to 'Add a food source', new_resource_path, class: 'btn btn-primary'
 
-%table
-  %tr
-    %th Business name
-    %th
-    %th
-    %th
+    - if collection.empty?
+      .alert.alert-info
+        No food sources have been recorded
 
-  - @food_sources.each do |food_source|
-    %tr
-      %td= food_source.business_name
-      %td= link_to 'Show', food_source
-      %td= link_to 'Edit', edit_food_source_path(food_source)
-      %td= link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    - else
+      %table.table.table-bordered.table-striped
+        %tr
+          %th Business name
+          %th
+          %th
+          %th
 
-%br
+        - @food_sources.each do |food_source|
+          %tr
+            %td= food_source.business_name
+            %td= link_to 'Show', food_source
+            %td= link_to 'Edit', edit_food_source_path(food_source)
+            %td= link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-= link_to 'New Food source', new_food_source_path
+      %br
+
+      = link_to 'New Food source', new_food_source_path

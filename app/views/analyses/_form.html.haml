@@ -4,7 +4,7 @@
   .form-inputs
     = f.input :name
     = f.input :description
-    = f.association :user, label_method: :email, selected: current_user
+    = f.association :user, label_method: :email, default: current_user
 
     = f.simple_fields_for :geo_region do |gr|
       = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)'

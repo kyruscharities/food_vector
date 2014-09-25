@@ -3,12 +3,12 @@
     %h1.page-header
       Recent analyses
       %span.pull-right
-        = link_to 'Start new analysis', new_analysis_path, class: 'btn btn-primary'
+        = link_to 'Start new analysis', new_resource_path, class: 'btn btn-primary'
 
     - if collection.empty?
       .alert.alert-info
         You haven't run any analyses yet.
-        = link_to 'Start a new analysis.', new_analysis_path
+        = link_to 'Start a new analysis.', new_resource_path
 
     - else
       %table.table.table-bordered.table-striped
