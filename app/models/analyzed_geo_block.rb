@@ -1,4 +1,6 @@
 class AnalyzedGeoBlock < ActiveRecord::Base
+  belongs_to :analysis
+
   has_many :geo_region
   validates_presence_of :geo_region
 
