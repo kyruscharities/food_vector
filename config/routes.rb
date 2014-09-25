@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   resources :analyzed_geo_blocks
 
-  resources :analyses
+  resources :analyses do
+    member do
+      :analyze
+    end
+  end
 
   root to: 'analyses#index'
 

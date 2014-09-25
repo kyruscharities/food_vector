@@ -1,29 +1,31 @@
-%h1 Listing analyses
+%section
+  .col-md-12
+    %h1 Listing analyses
 
-%table.table.table-bordered.table-striped
-  %tr
-    %th Name
-    %th Description
-    %th User
-    %th Geo region
-    %th Resolution
-    %th Analysis result
-    %th
-    %th
-    %th
+    %table.table.table-bordered.table-striped
+      %tr
+        %th Name
+        %th Description
+        %th User
+        %th Geo region
+        %th Resolution
+        %th Analysis result
+        %th
+        %th
+        %th
 
-  - @analyses.each do |analysis|
-    %tr
-      %td= analysis.name
-      %td= analysis.description
-      %td= analysis.user_id
-      %td= analysis.geo_region_id
-      %td= analysis.resolution_mi
-      %td= analysis.analysis_result_id
-      %td= link_to 'Show', analysis
-      %td= link_to 'Edit', edit_analysis_path(analysis)
-      %td= link_to 'Destroy', analysis, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      - @analyses.each do |analysis|
+        %tr
+          %td= analysis.name
+          %td= analysis.description
+          %td= analysis.user_id
+          %td= analysis.geo_region_id
+          %td= analysis.resolution_mi
+          %td= analysis.analysis_result_id
+          %td= link_to 'Show', analysis
+          %td= link_to 'Edit', edit_analysis_path(analysis)
+          %td= link_to 'Destroy', analysis, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+    %br
 
-= link_to 'New Analysis', new_analysis_path
+    = link_to 'New Analysis', new_analysis_path
