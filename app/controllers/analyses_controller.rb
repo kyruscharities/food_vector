@@ -7,6 +7,10 @@ class AnalysesController < ApplicationController
     new!
   end
 
+  def analyze
+    # TODO: integrate with someone else's stuff
+  end
+
   private
   def analysis_params
     params.require(:analysis).permit(:name, :description, :user_id, :geo_region_id, :resolution_mi, :analysis_result_id, geo_region_attributes:
