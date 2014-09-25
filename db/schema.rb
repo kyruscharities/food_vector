@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20140925212126) do
     t.datetime "updated_at"
     t.integer  "analysis_id"
     t.integer  "analyzed_geo_block_id"
+    t.decimal  "center_lat"
+    t.decimal  "center_lon"
   end
 
   create_table "geographic_data_points", force: true do |t|

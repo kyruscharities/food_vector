@@ -3,28 +3,10 @@
  */
 
 $(document).ready(function() {
-    var handler, heatmap, map;
+    var handler, map;
 
-    /*handler = Gmaps.build('Google');
-     handler.buildMap({ provider: {}, internal: {id: 'map'}, offsetWidth: 200}, function () {
-     markers = handler.addMarkers([
-     {
-     "lat": 37.774546,
-     "lng": -122.433523,
-     "picture": {
-     "url": "https://addons.cdn.mozilla.net/img/uploads/addon_icons/13/13028-64.png",
-     "width": 36,
-     "height": 36
-     },
-     "infowindow": "hello!"
-     }
-     ]);
-     handler.bounds.extendWith(markers);
-     handler.fitMapToBounds();
-     });
-     */
     var mapOptions = {
-        zoom: 10,
+        zoom: 3,
         center: new google.maps.LatLng(center_point.lat, center_point.lon),
         mapTypeId: google.maps.MapTypeId.MAP
     };
@@ -34,18 +16,22 @@ $(document).ready(function() {
 
     var foodData = [];
     for (var i = 0; i < food_data.length; i++) {
-        foodData.push(new google.maps.LatLng(food_data[i].lat, food_data[i].lon));
+        foodData.push({location: new google.maps.LatLng(food_data[i].geo_region.center_lat,
+            food_data[i].geo_region.center_lon), weight: parseInt(food_data[i].risk_score)});
     }
 
-    var pointArray = new google.maps.MVCArray(foodData);
     heatmap = new google.maps.visualization.HeatmapLayer({
-        data: pointArray
+        data: foodData,
+        dissipating: false,
+//        maxIntensity: 1000,
+        radius: 0.5
     });
 
     heatmap.setMap(map);
 
-
-    //markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    function toggleHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? null : map);
+    }
 })
 
 
