@@ -1,24 +1,26 @@
-%p#notice= notice
+%section
+  .col-md-12
+    %p#notice= notice
 
-%p
-  %b Name:
-  = @analysis.name
-%p
-  %b Description:
-  = @analysis.description
-%p
-  %b User:
-  = @analysis.user_id
-%p
-  %b Geo region:
-  = @analysis.geo_region.id
-%p
-  %b Resolution:
-  = @analysis.resolution_mi
-%p
-  %b Analysis result:
-  = @analysis.analysis_result_id
+    %p
+      %b Name:
+      = @analysis.name
+    %p
+      %b Description:
+      = @analysis.description
+    %p
+      %b User:
+      = @analysis.user_id
+    %p
+      %b Geo region:
+      = @analysis.geo_region_id
+    %p
+      %b Resolution:
+      = @analysis.resolution
+    %p
+      %b Analysis result:
+      = @analysis.analysis_result_id
 
-= link_to 'Edit', edit_analysis_path(@analysis)
-\|
-= link_to 'Back', analyses_path
+    = link_to 'Edit', edit_analysis_path(@analysis)
+    \|
+    = link_to 'Back', analyses_path
