@@ -17,7 +17,7 @@
       %td= analysis.name
       %td= analysis.description
       %td= analysis.user_id
-      %td= analysis.geo_region_id
+      %td= analysis.geo_region.id if analysis.geo_region
       %td= analysis.resolution_mi
       %td= analysis.analysis_result_id
       %td= link_to 'Show', analysis

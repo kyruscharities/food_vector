@@ -10,4 +10,6 @@ class GeoRegion < ActiveRecord::Base
 
   validates_presence_of :se_lon
   validates_numericality_of :se_lon, greater_than_or_equal_to: -180.0, less_than_or_equal_to: 180.0
+
+  belongs_to :analysis
 end

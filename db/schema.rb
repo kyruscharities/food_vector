@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925152623) do
+ActiveRecord::Schema.define(version: 20140925165522) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
-    t.integer  "geo_region_id"
     t.decimal  "resolution_mi"
     t.integer  "analysis_result_id"
     t.datetime "created_at"
@@ -44,6 +43,7 @@ ActiveRecord::Schema.define(version: 20140925152623) do
     t.decimal  "se_lon"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "analysis_id"
   end
 
   create_table "geographic_data_points", force: true do |t|
