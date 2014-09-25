@@ -11,18 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20140925165522) do
-=======
-ActiveRecord::Schema.define(version: 20140925173551) do
->>>>>>> LocatedFoodSource belongs to Analysis
+ActiveRecord::Schema.define(version: 20140925175338) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
     t.decimal  "resolution_mi"
-    t.integer  "analysis_result_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,6 +27,7 @@ ActiveRecord::Schema.define(version: 20140925173551) do
     t.decimal  "risk_score"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "analysis_id"
   end
 
   create_table "food_sources", force: true do |t|
