@@ -20,6 +20,9 @@ class AnalysisWorker
         region.analysis = analysis
         region.analyzed_geo_block = result
         region.save!
+
+        analysis.analyzed_at = Time.now
+        analysis.save!
       end
     end
   end
