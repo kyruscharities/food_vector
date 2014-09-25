@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140925165522) do
     t.string   "business_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "healthy"
   end
 
   create_table "geo_regions", force: true do |t|
