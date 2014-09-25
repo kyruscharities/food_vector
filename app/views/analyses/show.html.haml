@@ -19,14 +19,17 @@
       = @analysis.resolution_mi
     %p
       %b Analysis result:
-      = @analysis.analyzed_geo_blocks
-    %p
-      %b Located Healthy Food Sources
-      - if @analysis.located_healthy_food_sources.empty?
-        There are no healthy food sources in this geo region!
-    %p
-      %b Located Unhealthy Food Sources
-      - if @analysis.located_unhealthy_food_sources.empty?
-        There are no unhealthy food sources in this geo region.
-
-    = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post
+    - if @analysis.analyzed_at == nil
+      .alert.alert-info
+        You haven't ran this analysis yet
+      = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
+    - else
+      %p
+        %b Located Healthy Food Sources
+        - if @analysis.located_healthy_food_sources.empty?
+          There are no healthy food sources in this geo region!
+      %p
+        %b Located Unhealthy Food Sources
+        - if @analysis.located_unhealthy_food_sources.empty?
+          There are no unhealthy food sources in this geo region.
+      = link_to 'Re-analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
