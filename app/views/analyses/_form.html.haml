@@ -7,10 +7,10 @@
     = f.association :user, label_method: :email, default: current_user
 
     = f.simple_fields_for :geo_region do |gr|
-      = gr.input :nw_lat, as: :numeric, label: 'Northwest Latitude'
-      = gr.input :nw_lon, as: :numeric, label: 'Northwest Longitude'
-      = gr.input :se_lat, as: :numeric, label: 'Southeast Latitude'
-      = gr.input :se_lon, as: :numeric, label: 'Southeast Longitude'
+      = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)'
+      = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)'
+      = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)'
+      = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)'
 
     = f.input :resolution_mi, label: 'Analysis Resolution (mi)'
 
