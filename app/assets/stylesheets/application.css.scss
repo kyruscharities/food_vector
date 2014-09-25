@@ -14,3 +14,9 @@
  *= require_tree .
  *= require_self
  */
+
+body.food_sources.index {
+  .food-source.alert {
+    cursor: pointer;
+  }
+}

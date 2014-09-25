@@ -4,15 +4,15 @@
   .form-inputs
     = f.input :name
     = f.input :description
-    = f.association :user, label_method: :email, default: current_user
+    = f.hidden_field :user_id, value: current_user.id
 
     = f.simple_fields_for :geo_region do |gr|
-      = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)'
-      = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)'
-      = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)'
-      = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)'
+      = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)', input_html: { min: -85, max: 85}
+      = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }
+      = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)', input_html: { min: -85, max: 85}
+      = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)',input_html: {  min: -180, max: 180}
 
-    = f.input :resolution_mi, label: 'Analysis Resolution (mi)'
+    = f.input :resolution_mi, label: 'Analysis Resolution (mi)', input_html: {value: @analysis.resolution_mi || 5}
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, 'Run Analysis'

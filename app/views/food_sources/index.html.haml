@@ -1,7 +1,7 @@
 %section
   .col-md-12
     %h1.page-header
-      Food sources
+      Food Sources
       %span.pull-right
         = link_to 'Add a food source', new_resource_path, class: 'btn btn-primary'
 
@@ -10,17 +10,18 @@
         No food sources have been recorded
 
     - else
-      %table.table.table-bordered.table-striped
-        %tr
-          %th Business name
-          %th Healthy
-          %th
+      - collection.order(:business_name).each do |resource|
+        .food-source.alert{class: resource.healthy? ? 'alert-success' : 'alert-warning', onclick: "window.location = '#{resource_path(resource)}'"}
+          = resource.business_name
 
-        - @food_sources.each do |food_source|
-          %tr
-            %td= food_source.business_name
-            %td= food_source.healthy
-            %td
-              = link_to 'Show', food_source
-              = link_to 'Edit', edit_food_source_path(food_source)
-              = link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          .pull-right
+            - if resource.healthy?
+              .label.label-success Healthy
+            - else
+              .label.label-success Unhealthy
+
+            = link_to edit_food_source_path(resource), class: 'btn btn-default btn-xs' do
+              %i.fa.fa-pencil
+
+            = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
+              %i.fa.fa-trash

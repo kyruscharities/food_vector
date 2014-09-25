@@ -1,10 +1,17 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+def load_food_sources(sources, is_healthy)
+  sources.each do |name|
+    puts "Creating food source #{name}"
+    FoodSource.find_or_create_by! business_name: name do |resource|
+      resource.healthy = is_healthy
+    end
+  end
+end
+
+
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
-# Environment variables (ENV['...']) can be set in the file .env file.
+
+sources = YAML.load_file(Rails.root.join('config', 'food_sources.yml'))
+load_food_sources sources['healthy'].values.flatten.uniq, true
+load_food_sources sources['unhealthy'].try(:uniq), false

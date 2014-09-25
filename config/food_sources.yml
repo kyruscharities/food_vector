@@ -1,0 +1,295 @@
+healthy:
+  largest:
+    - Walmart
+    - Kroger
+    - Albertsons
+    - Safeway
+    - Publix
+    - Winn-Dixie
+    - Dairy Farm
+    - Shoprite
+    - Target
+
+  natural:
+    - Bristol Farms
+    - Central Market
+    - Dorothy Lane Market
+    - Earth Fare
+    - Ensenada Markets
+    - FreshDirect
+    - Home Economist 
+    - Hubbell and Hudson 
+    - Lunardi's
+    - Market of Choice
+    - Metropolitan Market
+    - Mollie Stone's
+    - New Seasons Market
+    - Nijiya Market Organic Gourmet Japanese Foods
+    - PCC Natural Markets
+    - Sno
+    - Spec's Wine, Spirits & Finer Foods
+    - Sprouts Farmers Market
+    - Stew Leonard's
+    - Supremo Supermarket 
+    - The Fresh Market
+    - Trader Joe's
+    - Twin City Supermarket 
+    - Whole Foods Market
+    - Wilson Farm
+
+  regional:
+    - A&P Supermarkets 
+    - Acme Fresh Market 
+    - AJ's Fine Foods – upscale
+    - Andronico's 
+    - Arlan's Market 
+    - Arteagas Food Center 
+    - Associated Supermarkets 
+    - Balducci's 
+    - Bashas' 
+    - Bashas' Diné Markets 
+    - Bel Air Markets
+    - BI-LO 
+    - Big M 
+    - Big Y Foods 
+    - BJ's Wholesale Club 
+    - Bravo 
+    - Breaux Mart Supermarkets 
+    - Brookshire Brothers 
+    - Brookshire Grocery Company 
+    - Broulims 
+    - Brown & Cole 
+    - Buehler's 
+    - Buehler's Buy-Low 
+    - Busch's 
+    - Butera 
+    - Buy For Less 
+    - Byerly's
+    - C-Town 
+    - Cannata's Family Market 
+    - Caraluzzi's 
+    - Carnival
+    - Central Market
+    - Chief Supermarket 
+    - Coborns 
+    - CobornsDelivers 
+    - Compare Foods Supermarket 
+    - Copps Food Center 
+    - Cost Cutter 
+    - County Market 
+    - Crest Foods 
+    - Crosby's Marketplace 
+    - D'Agostino Supermarkets 
+    - D&W Food Centers 
+    - Dahl's Foods 
+    - Dan's Supermarket 
+    - David's Supermarkets 
+    - DeCicco's 
+    - Dehoff's Key Markets 
+    - DeMoulas' Market Basket 
+    - Dierbergs 
+    - Dillons 
+    - Econofoods 
+    - Edwards Food Giant 
+    - Fairway Market 
+    - Fareway 
+    - Felpausch 
+    - Festival Foods 
+    - Food Basics 
+    - Food Bazaar Supermarkets 
+    - Food City 
+    - Food Depot 
+    - Food Emporium
+    - Food Giant
+    - Food Lion 
+    - Food Pavilion
+    - Food Town 
+    - FoodFair 
+    - Foodland 
+    - FoodLand Supermarkets 
+    - FoodMaxx
+    - Foodtown 
+    - Fresh & Easy 
+    - Gelson's Markets 
+    - Gerland's Food Fair 
+    - Giant Eagle 
+    - Giant Food 
+    - Giant Food Stores 
+    - Giant Foods 
+    - Giant-Carlisle 
+    - Giant-Landover 
+    - Giantway 
+    - Glen's Market 
+    - Gourmet Garage 
+    - Great American Food Stores 
+    - Great Valu Markets 
+    - Gristedes 
+    - Grocer's Pride 
+    - H-E-B 
+    - H-E-B Plus
+    - Haggen Food & Pharmacy 
+    - Handy Andy 
+    - Hannaford Brothers Company
+    - Harding's Friendly Markets 
+    - Harmons Grocery 
+    - Harp's Market 
+    - Harvest Foods 
+    - Harvest Foods 
+    - Harveys
+    - Heinen's Fine Foods 
+    - Hiller's Market 
+    - Holiday Foods 
+    - Holiday Market 
+    - Holiday Quality Foods 
+    - Hollywood Super Market 
+    - Homeland 
+    - Houchens Industries 
+    - Huckleberry's Natural Market 
+    - Hugo's 
+    - Hy-Vee 
+    - Ingles 
+    - Jack 'n Jill 
+    - Jons Marketplace 
+    - Karns Quality Foods 
+    - Key Food 
+    - Key Markets
+    - King Kullen 
+    - Kings 
+    - Kowalski's 
+    - Kuhn's Quality Foods 
+    - Landis Supermarkets 
+    - Lauer's Supermarket and Bakery 
+    - Lowe's Markets 
+    - Lowes Foods 
+    - Lucky Stores 
+    - Lunds 
+    - Mac's Market 
+    - Macey's Market 
+    - Magruder's 
+    - Mariano's Fresh Market 
+    - Market Basket 
+    - Market of Choice
+    - Market Street
+    - Mars 
+    - Marsh 
+    - Martin's Super Markets 
+    - Matherne's Supermarkets 
+    - Mayfair Markets
+    - McCaffrey's 
+    - Meijer 
+    - Met Foods 
+    - Metro Market 
+    - Miller's Fresh Foods 
+    - Minyard's
+    - Minyard's 
+    - Morton Williams 
+    - Mrs. Green's Natural Market 
+    - Murphy's Marketplace 
+    - Nash Finch Company 
+    - Natural Grocers by Vitamin Cottage 
+    - New Deal Market 
+    - New Deal Supermarket 
+    - New Seasons Market 
+    - Nob Hill Foods
+    - Nugget Markets 
+    - O'Malia's
+    - Obriens Market 
+    - Omni Foods 
+    - Pathmark 
+    - Petosa's Family Grocery 
+    - Pick 'N Save 
+    - Pick 'n Save 
+    - Piggly Wiggly 
+    - PJP MARKETPLACE 
+    - Plum Market 
+    - Preston-Safeway 
+    - Price Chopper 
+    - Publix 
+    - Quality Foods 
+    - Quality Markets 
+    - R Ranch Markets 
+    - Raley's 
+    - Ray's Food Place 
+    - Ream's Food Stores 
+    - Reasors 
+    - Red Apple 
+    - Redner's Warehouse Markets 
+    - Reid's
+    - Remke Markets bigg's 
+    - Rice Supermarkets 
+    - Ridley's Family Markets 
+    - Riesbeck Food Markets 
+    - Robèrt's Fresh Market 
+    - Roche Bros. 
+    - Rosauers 
+    - Roth's Fresh Markets 
+    - Roundy's
+    - Rouse's Supermarket 
+    - Royal Ahold
+    - S-Mart Foods 
+    - Sack and Save
+    - Sack&Save
+    - Save Mart Supermarkets 
+    - Save-a-Lot 
+    - Save-On-Foods
+    - Schnucks 
+    - Scolari's Food and Drug 
+    - Scot's Lo-Cost 
+    - Sedano's 
+    - Seller's Brothers 
+    - Sentry Foods 
+    - Shaw's and Star Market 
+    - Shop n' Save 
+    - ShopRite 
+    - Stater Brothers 
+    - Stew Leonard's 
+    - Stewart's Shops 
+    - Stop & Shop 
+    - Strack & Van Til 
+    - Straub's Markets 
+    - Sudbury Farms 
+    - Sullivan's Foods 
+    - Sunflower Farmers Market 
+    - Sunset Foods 
+    - Super 1 Foods 
+    - Super Fresh 
+    - Super One Foods 
+    - Superior Grocers 
+    - Superking Market 
+    - SuperOne Foods 
+    - Supersol 
+    - Supremo Supermarket 
+    - Sweetbay
+    - The Food Emporium 
+    - The Fresh Grocer 
+    - The Great Atlantic and Pacific Tea Company
+    - Thriftway Supermarkets 
+    - Times Supermarkets 
+    - Top Food & Drug
+    - Tops
+    - Town & Country Food Market
+    - Trade Fair 
+    - Trader Joe's 
+    - Treasure Island 
+    - Trig's 
+    - Turco's 
+    - Ultra Foods
+    - Vallarta Supermarkets 
+    - Village Market Food Center 
+    - Wade's 
+    - Wal-Mart Neighborhood Market 
+    - Waldbaum's 
+    - Wayne's Hometown Market 
+    - Wegmans 
+    - Weis Markets 
+    - Wesselman's 
+    - Westborn Market 
+    - Western Beef 
+    - Wilson Farms 
+    - WinCo Foods 
+    - Winn-Dixie
+    - Wise Way 
+    - Woodman's Food Market 
+    - Yoke's Fresh Market 
+
+unhealthy:
