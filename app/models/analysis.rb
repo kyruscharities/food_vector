@@ -3,11 +3,10 @@ class Analysis < ActiveRecord::Base
   validates_presence_of :user
 
   has_many :healthy_food_sources, class: FoodSource
-  validates_presence_of :healthy_food_sources
 
   has_many :unhealthy_food_sources, class: FoodSource
 
-  belongs_to :geo_region
+  has_one :geo_region
   validates_presence_of :geo_region
   accepts_nested_attributes_for :geo_region
 
