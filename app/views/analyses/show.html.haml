@@ -17,13 +17,17 @@
     %p
       %b Resolution (mi):
       = @analysis.resolution_mi
-    %p
-      %b Analysis result:
+
     - if @analysis.analyzed_at == nil
+      %p
+        %b Analyzed at:
       .alert.alert-info
-        You haven't ran this analysis yet
+        This analysis hasn't been ran yet
       = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
     - else
+      %p
+        %b Analyzed at:
+        = @analysis.analyzed_at
       %p
         %b Located Healthy Food Sources
         - if @analysis.located_healthy_food_sources.empty?

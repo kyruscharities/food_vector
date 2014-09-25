@@ -16,6 +16,7 @@
           %th Name
           %th Geo region
           %th Resolution
+          %th Analyzed at
           %th
 
         - collection.order(:updated_at).each do |analysis|
@@ -24,7 +25,10 @@
             %td= analysis.geo_region.id if analysis.geo_region
             %td= analysis.resolution_mi
             %td
+              - if analysis.analyzed_at == nil
+                Never
+              - else
+                = analysis.analyzed_at
+            %td
               = link_to 'Show', analysis
               = link_to 'Destroy', analysis, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-
