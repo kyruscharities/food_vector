@@ -12,6 +12,7 @@ class GeoRegion < ActiveRecord::Base
   validates_numericality_of :se_lon, greater_than_or_equal_to: -180.0, less_than_or_equal_to: 180.0
 
   belongs_to :analysis
+  belongs_to :analyzed_geo_block
 
   def center_point
     lat = nw_lat - ((nw_lat - se_lat) / 2)

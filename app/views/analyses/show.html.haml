@@ -1,3 +1,8 @@
+- content_for :head do
+  = javascript_tag do
+    var center_point = #{raw @analysis.geo_region.center_point.to_json}
+    var food_data = #{raw @analysis.convertAnalyzedToLatLon.to_json}
+
 %section
   .col-md-12
     %p#notice= notice
@@ -33,3 +38,6 @@
         - if @analysis.located_unhealthy_food_sources.empty?
           There are no unhealthy food sources in this geo region.
       = link_to 'Re-analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
+      
+%div{style: 'width: 800px;'}
+  #map{style: 'width: 800px; height: 400px;'}
