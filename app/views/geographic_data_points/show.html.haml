@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Geo region:
+  = @geographic_data_point.geo_region_id
+%p
+  %b Type,:
+  = @geographic_data_point.type,
+%p
+  %b Data:
+  = @geographic_data_point.data
+
+= link_to 'Edit', edit_geographic_data_point_path(@geographic_data_point)
+\|
+= link_to 'Back', geographic_data_points_path

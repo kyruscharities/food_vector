@@ -1,0 +1,19 @@
+%h1 Listing food_sources
+
+%table
+  %tr
+    %th Business name
+    %th
+    %th
+    %th
+
+  - @food_sources.each do |food_source|
+    %tr
+      %td= food_source.business_name
+      %td= link_to 'Show', food_source
+      %td= link_to 'Edit', edit_food_source_path(food_source)
+      %td= link_to 'Destroy', food_source, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Food source', new_food_source_path

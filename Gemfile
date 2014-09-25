@@ -16,6 +16,7 @@ gem 'puma'
 gem 'simple_form'
 gem 'rails_12factor', group: :production
 gem 'pg', group: :production
+gem 'inherited_resources'
 
 group :development do
   gem 'better_errors'
