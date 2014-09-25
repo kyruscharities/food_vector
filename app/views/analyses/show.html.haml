@@ -22,22 +22,34 @@
     %p
       %b Resolution (mi):
       = @analysis.resolution_mi
-    %p
-      %b Analysis result:
+
+    %h2 Results
     - if @analysis.analyzed_at == nil
+      %p
+        %b Analyzed at:
       .alert.alert-info
-        You haven't ran this analysis yet
+        This analysis hasn't been ran yet
       = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
     - else
       %p
-        %b Located Healthy Food Sources
+        %b Analyzed at:
+        = @analysis.analyzed_at
+      %p
+        %b Number of blocks analyzed within the geo region:
+        = @analysis.analyzed_geo_blocks.count
+      %p
+        %b Number of located healthy food sources:
         - if @analysis.located_healthy_food_sources.empty?
           There are no healthy food sources in this geo region!
+        - else
+          = @analysis.located_healthy_food_sources.count
       %p
-        %b Located Unhealthy Food Sources
+        %b Number of located unhealthy food sources:
         - if @analysis.located_unhealthy_food_sources.empty?
           There are no unhealthy food sources in this geo region.
+        - else
+          = @analysis.located_unhealthy_food_sources.count
       = link_to 'Re-analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
-      
+
 %div{style: 'width: 800px;'}
   #map{style: 'width: 800px; height: 400px;'}
