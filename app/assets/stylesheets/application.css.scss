@@ -16,7 +16,15 @@
  */
 
 body.food_sources.index {
-  .food-source.alert {
-    cursor: pointer;
+  li.food-source {
+    padding: 10px 0;
   }
+}
+
+.no-margin {
+  margin: 3px 0;
+}
+
+form .form-group label.checkbox {
+  margin-left: 20px;
 }

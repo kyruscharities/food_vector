@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby "2.1.2"
+
 gem 'rails', '4.1.6'
 gem 'sass-rails', '~> 4.0.3'
 gem 'uglifier', '>= 1.3.0'
@@ -23,6 +24,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'dotenv-deployment'
 
 group :development do
   gem 'better_errors'

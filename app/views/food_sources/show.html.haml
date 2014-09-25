@@ -1,12 +1,27 @@
-%p#notice= notice
+%section
+  .col-md-12
+    %h1.page-header
+      = resource.business_name
 
-%p
-  %b Business name:
-  = @food_source.business_name
-%p
-  %b Healthy:
-  = @food_source.healthy
+      %span.pull-right
+        = link_to edit_resource_path, class: 'btn btn-primary' do
+          %i.fa.fa-pencil
+          Edit
 
-= link_to 'Edit', edit_food_source_path(@food_source)
-\|
-= link_to 'Back', food_sources_path
+    - if resource.healthy?
+      .alert.alert-success
+        %h3.no-margin A healthy food source
+    - else
+      .alert.alert-danger
+        %h3.no-margin An unhealthy food source
+
+    - unless resource.locations.empty?
+      %h4.page-header Locations we've seen during analyses
+      %ol
+        - resource.locations.each do |located_food_source|
+          %li
+            %p
+              = lat_lon located_food_source.lat, located_food_source.lon
+
+            - if located_food_source.price_rank?
+              %p Price Rank: #{located_food_source.price_rank}
