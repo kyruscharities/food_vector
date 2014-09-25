@@ -24,6 +24,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'kdtree'
 gem 'dotenv-deployment'
 gem 'rolify'
 gem 'cancan'
