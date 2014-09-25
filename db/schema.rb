@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140925192421) do
     t.decimal  "resolution_mi"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "analyzed_at"
   end
 
   create_table "analyzed_geo_blocks", force: true do |t|
