@@ -1,0 +1,6 @@
+%section
+  .col-md-12
+    %h1.page-header Editing #{resource_class.name.underscore.gsub('_', ' ').titleize}
+
+  = render 'form'
+  = link_to 'Show', resource

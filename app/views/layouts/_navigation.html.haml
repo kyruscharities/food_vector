@@ -2,12 +2,27 @@
 %nav.navbar.navbar-default.navbar-fixed-top
   .container
     .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+      %button.navbar-toggle{'data-target' => '.navbar-collapse', 'data-toggle' => 'collapse', :type => 'button'}
         %span.sr-only Toggle navigation
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
+
+      = link_to 'FOOD VECTOR', root_path, class: 'navbar-brand'
+
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
-        = render 'layouts/navigation_links'
+        - if user_signed_in?
+          %li= link_to 'Food Sources', food_sources_path
+          %li= link_to 'Geographic Data', geographic_data_points_path
+
+      %ul.nav.navbar-nav.pull-right
+        - if user_signed_in?
+          %li= link_to current_user.email, edit_user_registration_path
+          %li
+            = link_to destroy_user_session_path, :method=>'delete' do
+              %i.fa.fa-sign-out
+
+        - else
+          %li= link_to 'Sign in', new_user_session_path
+          %li= link_to 'Sign up', new_user_registration_path

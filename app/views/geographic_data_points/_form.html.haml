@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.input :geo_region_id
-    = f.input :type,
+    = f.input :type, collection: GeographicDataPoint::TYPES
     = f.input :data
 
   .form-actions
