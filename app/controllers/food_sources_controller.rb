@@ -3,6 +3,6 @@ class FoodSourcesController < ApplicationController
 
   private
     def food_source_params
-      params.require(:food_source).permit(:business_name)
+      params.require(:food_source).permit(:business_name, :healthy)
     end
 end
