@@ -23,6 +23,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'kdtree'
 
 group :development do
   gem 'better_errors'
