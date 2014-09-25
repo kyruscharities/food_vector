@@ -25,11 +25,8 @@
 
     %h2 Results
     - if @analysis.analyzed_at == nil
-      %p
-        %b Analyzed at:
       .alert.alert-info
-        This analysis hasn't been ran yet
-      = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post, class: 'btn btn-primary'
+        This analysis is currently being analyzed
     - else
       %p
         %b Analyzed at:
