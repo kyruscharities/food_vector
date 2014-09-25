@@ -26,6 +26,12 @@ class Analysis < ActiveRecord::Base
   scope :located_healthy_food_sources, -> { where('located_food_sources.healthy = ?', true) }
   scope :located_unhealthy_food_sources, -> { where('located_food_sources.healthy = ?', false) }
 
+  def clear_analysis_results!
+    analyzed_geo_blocks.delete_all
+    located_food_sources.delete_all
+
+    update! analyzed_at: nil
+  end
 
   def convertAnalyzedToLatLon()
     latLons = []

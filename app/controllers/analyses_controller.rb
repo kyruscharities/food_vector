@@ -10,7 +10,7 @@ class AnalysesController < ApplicationController
   end
 
   def analyze_work
-    resource.update! analyzed_at: nil
+    resource.clear_analysis_results!
 
     AnalysisWorker.perform_async(resource.id)
 
