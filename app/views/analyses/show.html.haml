@@ -1,3 +1,8 @@
+- content_for :head do
+  = javascript_tag do
+    var center_point = #{raw @analysis.geo_region.center_point}
+    var food_data = #{raw @analysis.analyzed_geo_block.center_point}
+
 %section
   .col-md-12
     %p#notice= notice
@@ -30,3 +35,7 @@
         There are no unhealthy food sources in this geo region.
 
     = link_to 'Analyze', analyze_analysis_path(@analysis), method: :post
+
+%div{style: 'width: 800px;'}
+  #map{style: 'width: 800px; height: 400px;'}
+

@@ -23,4 +23,18 @@ class Analysis < ActiveRecord::Base
     located_food_sources.where('healthy = ?', false)
   end
 
+  scope :located_healthy_food_sources, -> { where('located_food_sources.healthy = ?', true) }
+  scope :located_unhealthy_food_sources, -> { where('located_food_sources.healthy = ?', false) }
+
+
+  def convertAnalyzedToLatLon()
+    latLons = []
+    analyzed_geo_blocks.each do |block|
+      cp = block.geo_region.center_point
+      block.risk_score.to_i.times do
+          latLons << cp
+      end
+    end
+    latLons
+  end
 end
