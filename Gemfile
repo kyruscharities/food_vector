@@ -19,6 +19,8 @@ gem 'pg', group: :production
 gem 'inherited_resources'
 gem 'font-awesome-rails'
 gem 'rest-client'
+gem 'gmaps4rails'
+gem 'underscore-rails'
 
 group :development do
   gem 'better_errors'
