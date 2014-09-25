@@ -32,9 +32,26 @@ class Analysis < ActiveRecord::Base
     analyzed_geo_blocks.each do |block|
       cp = block.geo_region.center_point
       block.risk_score.to_i.times do
-          latLons << cp
+        latLons << cp
       end
     end
     latLons
+  end
+
+  def generate_fake_data_points(num_points)
+    num_points.to_i.times do
+      temp_se_lat = rand(geo_region.se_lat..geo_region.nw_lat)
+      temp_se_lon = rand(geo_region.se_lon..geo_region.nw_lon)
+      temp_nw_lat = rand(temp_se_lat..geo_region.nw_lat)
+      temp_nw_lon = rand(temp_se_lon..geo_region.nw_lon)
+      puts "temp_se_lon: #{temp_se_lon}"
+      gr = GeoRegion.create! nw_lat: temp_nw_lat,
+                             nw_lon: temp_nw_lon,
+                             se_lat: temp_se_lat,
+                             se_lon: temp_se_lon
+
+      gened_block = AnalyzedGeoBlock.create!(geo_region: gr, risk_score: rand(0..100))
+      analyzed_geo_blocks << gened_block
+    end
   end
 end
