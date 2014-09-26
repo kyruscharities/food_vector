@@ -10,7 +10,11 @@ $(document).ready(function () {
         var mapOptions = {
             zoom: 9,
             center: new google.maps.LatLng(center_point.lat, center_point.lon),
-            mapTypeId: google.maps.MapTypeId.MAP
+            mapTypeId: google.maps.MapTypeId.MAP,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_LEFT
+            }
         };
 
         map = new google.maps.Map(document.getElementById('map'),
@@ -34,13 +38,9 @@ $(document).ready(function () {
 
         heatmap.setMap(map);
 
-        function toggleHeatmap() {
-            heatmap.setMap(heatmap.getMap() ? null : map);
-        }
-
         // Split healthy/unheathy located food sources and put on map
         var healthyFoodData = [];
-        var unheathlyFoodData = [];
+        var unhealthyFoodData = [];
         for (var i = 0; i < food_data.length; i++) {
             var newMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(food_data[i].lat, food_data[i].lon),
@@ -56,7 +56,7 @@ $(document).ready(function () {
                 healthyFoodData.push(newMarker);
             } else {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-                unheathlyFoodData.push(newMarker);
+                unhealthyFoodData.push(newMarker);
             }
         }
 
@@ -68,6 +68,26 @@ $(document).ready(function () {
             google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(marker.get('map'), marker);
             });
+        }
+
+        $('#toggle-heatmap').click(function () {
+            heatmap.setMap(heatmap.getMap() ? null : map);
+        });
+
+        $('#toggle-healthy').click(function() {
+            toggle_markers(healthyFoodData)
+        });
+
+        $('#toggle-unhealthy').click(function() {
+            toggle_markers(unhealthyFoodData)
+        });
+
+        function toggle_markers(foodData) {
+            for (var i = 0; i < foodData.length; i++) {
+                var thisMap = foodData[i].get('map');
+                thisMap = thisMap ? null : map
+                foodData[i].setMap(thisMap);
+            }
         }
     });
 

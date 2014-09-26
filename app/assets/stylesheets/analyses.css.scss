@@ -1,3 +1,17 @@
 // Place all the styles related to the Analyses controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#map-controls {
+  background-color: white;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 7px;
+  border: 1px solid black;
+  label {
+    margin: 0 5px;
+    font-weight: normal;
+    font-size: .9em;
+  }
+}
