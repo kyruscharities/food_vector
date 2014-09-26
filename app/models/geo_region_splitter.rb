@@ -1,5 +1,5 @@
 module GeoRegionSplitter
-  INCREMENT = 0.01
+  INCREMENT = 0.005
 
   def self.split(region)
     rounded = [region.nw_lat, region.nw_lon, region.se_lat, region.se_lon]
@@ -10,7 +10,7 @@ module GeoRegionSplitter
     longs = Range.new(nw_lon, se_lon, false).step(INCREMENT).to_a
 
     lats.product(longs).map do |lat, long|
-      GeoRegion.new nw_lat: lat,
+      GeoRegion.find_or_create_by! nw_lat: lat,
                     nw_lon: long,
                     se_lat: lat + INCREMENT,
                     se_lon: long + INCREMENT

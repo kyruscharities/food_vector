@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926143204) do
+ActiveRecord::Schema.define(version: 20140926160238) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20140926143204) do
     t.decimal  "center_lat"
     t.decimal  "center_lon"
     t.float    "risk_score"
+    t.text     "income_data"
+    t.integer  "census_tract_id"
   end
 
   create_table "geographic_data_points", force: true do |t|
