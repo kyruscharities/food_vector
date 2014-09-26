@@ -16,6 +16,11 @@ $(document).ready(function () {
         map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
 
+        var mapBounds = new google.maps.LatLngBounds();
+        mapBounds.extend(new google.maps.LatLng(bounds.nw_lat, bounds.nw_lon))
+        mapBounds.extend(new google.maps.LatLng(bounds.se_lat, bounds.se_lon))
+        map.fitBounds(mapBounds);
+
         var regionData = [];
         for (var i = 0; i < region_data.length; i++) {
             regionData.push({
