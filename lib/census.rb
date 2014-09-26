@@ -68,7 +68,8 @@ class Census
       parsed_data = JSON.parse population_data.body
 
       {
-          poverty_rate: parsed_data[1][1].to_f / parsed_data[1][0].to_f,
+          individuals_below_poverty_line: parsed_data[1][1],
+          poverty_rate:  parsed_data[1][1].to_f / parsed_data[1][0].to_f,
           median_income: parsed_data[1][2],
           identifier: "#{state}#{county}#{tract}"
       }
