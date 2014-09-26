@@ -10,4 +10,8 @@ class LocatedFoodSource < ActiveRecord::Base
 
   # can be part of an analysis
   belongs_to :analysis
+
+  def as_json(options={})
+    super(options.merge({include: :food_source}))
+  end
 end
