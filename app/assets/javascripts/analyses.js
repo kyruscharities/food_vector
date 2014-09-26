@@ -8,7 +8,7 @@ $(document).ready(function () {
         var handler, map;
 
         var mapOptions = {
-            zoom: 3,
+            zoom: 9,
             center: new google.maps.LatLng(center_point.lat, center_point.lon),
             mapTypeId: google.maps.MapTypeId.MAP
         };
@@ -29,7 +29,7 @@ $(document).ready(function () {
             data: foodData,
             dissipating: false,
 //        maxIntensity: 1000,
-            radius: 0.03
+            radius: 0.02
         });
 
         heatmap.setMap(map);

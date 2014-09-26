@@ -34,10 +34,6 @@ class GeoRegion < ActiveRecord::Base
     }
   end
 
-  def calculate_risk_score
-    AnalysisWorker::GeoRegionRiskScoreCalculatorWorker.perform_async self.id
-  end
-
   def nw
     [nw_lat, nw_lon]
   end

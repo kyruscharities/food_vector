@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926123407) do
+ActiveRecord::Schema.define(version: 20140926143204) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(version: 20140926123407) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "geo_region_id"
+  end
+
+  create_table "analysis_geo_region_scores", force: true do |t|
+    t.integer  "analysis_id"
+    t.integer  "geo_region_id"
+    t.decimal  "risk_score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "analyzed_geo_blocks", force: true do |t|
