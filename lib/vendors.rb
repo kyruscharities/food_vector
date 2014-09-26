@@ -19,7 +19,7 @@ module Vendors
                   "&keyword=#{CGI.escape(fs.business_name)}" \
                   "&rankby=distance"
     
-    if pagetok
+    if pagetok != ""
       request_url = "#{request_url}&pagetoken=#{pagetok}"
     end
 
