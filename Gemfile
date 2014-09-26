@@ -29,6 +29,7 @@ gem 'dotenv-deployment'
 gem 'rolify'
 gem 'cancan'
 gem 'jquery-turbolinks'
+gem 'figaro'
 
 group :development do
   gem 'better_errors'
