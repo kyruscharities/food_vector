@@ -17,6 +17,6 @@ Run sidekiq
 
 Run the server
 
-    rails server
+    bin/rails server
 
 Navigate to `localhost:3000`
