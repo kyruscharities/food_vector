@@ -28,6 +28,7 @@ gem 'kdtree'
 gem 'dotenv-deployment'
 gem 'rolify'
 gem 'cancan'
+gem 'jquery-turbolinks'
 
 group :development do
   gem 'better_errors'

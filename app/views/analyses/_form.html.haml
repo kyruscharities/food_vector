@@ -6,6 +6,9 @@
     = f.input :description
     = f.hidden_field :user_id, value: current_user.id
 
+    %div{style: 'width: 800px;'}
+      #map{style: 'width: 800px; height: 400px;'}
+
     = f.simple_fields_for :geo_region do |gr|
       = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)', input_html: { min: -85, max: 85}
       = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }

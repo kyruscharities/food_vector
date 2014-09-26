@@ -1,7 +1,7 @@
-- content_for :head do
-  = javascript_tag do
-    var center_point = #{raw @analysis.geo_region.center_point.to_json}
-    var food_data = #{raw @analysis.analyzed_geo_blocks.to_json}
+-#- content_for :head do
+= javascript_tag do
+  var center_point = #{raw @analysis.geo_region.center_point.to_json}
+  var food_data = #{raw @analysis.analyzed_geo_blocks.to_json}
 
 %section
   .col-md-12
