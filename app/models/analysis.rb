@@ -53,7 +53,7 @@ class Analysis < ActiveRecord::Base
     clear_analysis_results!
 
     # identify and store all the regions
-    GeoRegionSplitter.split(geo_region, 900).each { |r| analysis_geo_region_scores.append AnalysisGeoRegionScore.create! geo_region: r, analysis: self }
+    GeoRegionSplitter.split(geo_region).each { |r| analyzed_geo_regions.append r }
 
     raise 'No suitable geographic regions found to analyze' if analysis_geo_region_scores.empty?
 
