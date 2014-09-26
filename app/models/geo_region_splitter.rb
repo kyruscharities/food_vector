@@ -9,12 +9,14 @@ module GeoRegionSplitter
     lats = Range.new(se_lat, nw_lat, false).step(INCREMENT).to_a
     longs = Range.new(nw_lon, se_lon, false).step(INCREMENT).to_a
 
+    geo_region_ids = []
     lats.product(longs).map do |lat, long|
-      GeoRegion.find_or_create_by! nw_lat: lat,
+      gr = GeoRegion.find_or_create_by! nw_lat: lat,
                     nw_lon: long,
                     se_lat: lat + INCREMENT,
                     se_lon: long + INCREMENT
+      geo_region_ids << gr.id
     end
-    nil
+    geo_region_ids
   end
 end
