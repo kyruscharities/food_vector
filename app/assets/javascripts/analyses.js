@@ -18,8 +18,11 @@ $(document).ready(function () {
 
         var foodData = [];
         for (var i = 0; i < food_data.length; i++) {
-            foodData.push({location: new google.maps.LatLng(food_data[i].geo_region.center_lat,
-                food_data[i].geo_region.center_lon), weight: parseInt(food_data[i].risk_score)});
+            foodData.push({
+                location: new google.maps.LatLng(food_data[i].center_lat,
+                food_data[i].center_lon),
+                weight: parseInt(food_data[i].risk_score)
+            });
         }
 
         heatmap = new google.maps.visualization.HeatmapLayer({

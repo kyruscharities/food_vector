@@ -4,12 +4,6 @@ class AnalysesController < ApplicationController
 
   after_filter :do_analysis, only: [:create]
 
-  def new
-    @analysis = Analysis.new
-    @analysis.geo_region = GeoRegion.new
-    new!
-  end
-
   def analyze
     do_analysis
     redirect_to analysis_path(resource)
@@ -17,7 +11,7 @@ class AnalysesController < ApplicationController
 
   private
   def analysis_params
-    params.require(:analysis).permit(:name, :description, :user_id, :geo_region_id, :resolution_mi, :analysis_result_id,
+    params.require(:analysis).permit(:name, :description, :user_id, :geo_region_id, :analysis_result_id,
                                      :analyzed_at, geo_region_attributes: [:nw_lat, :nw_lon, :se_lat, :se_lon])
   end
 
@@ -26,7 +20,7 @@ class AnalysesController < ApplicationController
     return unless resource.errors.empty?
 
     resource.clear_analysis_results!
-    AnalysisWorker.perform_async(resource.id)
-    flash[:notice] = "The analysis has started analyzing"
+    resource.analyze!
+    flash[:notice] = 'Analysis started'
   end
 end

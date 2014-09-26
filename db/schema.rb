@@ -11,16 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140925213656) do
+ActiveRecord::Schema.define(version: 20140926123407) do
 
   create_table "analyses", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "user_id"
-    t.decimal  "resolution_mi"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "analyzed_at"
+    t.integer  "geo_region_id"
   end
 
   create_table "analyzed_geo_blocks", force: true do |t|
@@ -49,6 +48,7 @@ ActiveRecord::Schema.define(version: 20140925213656) do
     t.integer  "analyzed_geo_block_id"
     t.decimal  "center_lat"
     t.decimal  "center_lon"
+    t.float    "risk_score"
   end
 
   create_table "geographic_data_points", force: true do |t|

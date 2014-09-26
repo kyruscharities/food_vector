@@ -6,7 +6,7 @@
 #
 default: &default
   adapter: sqlite3
-  pool: 5
+  pool: 30
   timeout: 5000
 
 development:
@@ -23,4 +23,4 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  pool: 30

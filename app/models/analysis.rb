@@ -1,17 +1,20 @@
 class Analysis < ActiveRecord::Base
+
+  after_initialize :init
+
   validates_presence_of :name
 
   belongs_to :user
   validates_presence_of :user
 
-  has_one :geo_region
+  belongs_to :geo_region
   validates_presence_of :geo_region
-  accepts_nested_attributes_for :geo_region
+  accepts_nested_attributes_for :geo_region, allow_destroy: true
 
-  validates_presence_of :resolution_mi
-  validates_numericality_of :resolution_mi, greater_than: 0
+  has_many :analyzed_geo_regions, class_name: 'GeoRegion'
 
-  has_many :analyzed_geo_blocks
+  delegate :nw, to: :geo_region
+  delegate :se, to: :geo_region
 
   has_many :located_food_sources
 
@@ -23,33 +26,9 @@ class Analysis < ActiveRecord::Base
     located_food_sources.includes(:food_source).where(food_source: {healthy: false})
   end
 
-  def nw
-    [geo_region.nw_lat, geo_region.nw_lon]
-  end
-
-  def se
-    [geo_region.se_lat, geo_region.se_lon]
-  end
-
   def clear_analysis_results!
-    analyzed_geo_blocks.delete_all
+    analyzed_geo_regions.delete_all
     located_food_sources.delete_all
-
-    update! analyzed_at: nil
-  end
-
-  def convertAnalyzedToLatLon()
-    analyzed_geo_blocks
-=begin
-    latLons = []
-    analyzed_geo_blocks.each do |block|
-      cp = block.geo_region.center_point,
-      block.risk_score.to_i.times do
-        latLons << cp
-      end
-    end
-    latLons
-=end
   end
 
   def generate_fake_data_points(num_points)
@@ -67,5 +46,30 @@ class Analysis < ActiveRecord::Base
       gened_block = AnalyzedGeoBlock.create!(geo_region: gr, risk_score: rand(0..100))
       analyzed_geo_blocks << gened_block
     end
+  end
+
+  def analyze!
+    clear_analysis_results!
+
+    # identify and store all the regions
+    GeoRegionSplitter.split(geo_region, 900).each { |r| analyzed_geo_regions.append r }
+
+    raise 'No suitable geographic regions found to analyze' if analyzed_geo_regions.empty?
+
+    # calculate all the risk scores
+    analyzed_geo_regions.each { |r| r.calculate_risk_score }
+  end
+
+  def analysis_complete?
+    # analysis is complete when all blocks have a risk score
+    analyzed_geo_regions.where(risk_score: nil).empty?
+  end
+
+  def analysis_progress
+    "#{analyzed_geo_regions.where.not(risk_score: nil).count} / #{analyzed_geo_regions.count}"
+  end
+
+  def init
+    build_geo_region unless geo_region
   end
 end

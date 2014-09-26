@@ -1,5 +1,7 @@
 = simple_form_for(@analysis) do |f|
   = f.error_notification
+  = @analysis.geo_region.inspect
+  = @analysis.errors.inspect
 
   .form-inputs
     = f.input :name
@@ -14,8 +16,6 @@
       = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }
       = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)', input_html: { min: -85, max: 85}
       = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)',input_html: {  min: -180, max: 180}
-
-    = f.input :resolution_mi, label: 'Analysis Resolution (mi)', input_html: {value: @analysis.resolution_mi || 5}
 
   .form-actions
     = f.button :submit, 'Run Analysis'
