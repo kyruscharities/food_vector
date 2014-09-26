@@ -1,5 +1,5 @@
 module GeoRegionSplitter
-  INCREMENT = 0.005
+  INCREMENT = 0.002
 
   def self.split(region)
     rounded = [region.nw_lat, region.nw_lon, region.se_lat, region.se_lon]

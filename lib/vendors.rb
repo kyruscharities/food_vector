@@ -16,7 +16,7 @@ module Vendors
                   "key=#{API_KEY}" \
                   "&location=#{geo.center_lat},#{geo.center_lon}" \
                   "&types=food" \
-                  "&keyword=#{CGI.escape(fs.business_name)}" \
+                  "&name=#{CGI.escape(fs.business_name)}" \
                   "&rankby=distance"
     
     if pagetok != ""
@@ -48,10 +48,10 @@ module Vendors
         
         if loc_lat > (geo.nw_lat + 0.1) or loc_lat < (geo.se_lat - 0.1)
           puts "breaking loop because too big or small of latitude"
-          next
+          return
         elsif loc_lon < (geo.nw_lon - 0.1) or loc_lon > (geo.se_lon + 0.1)
           puts "breaking loop because too big or small of long"
-          next
+          return
         end
         
         LocatedFoodSource.create! lat: loc_lat,
@@ -62,8 +62,8 @@ module Vendors
     else
       puts "ERROR: Request returned code - #{response.code}"
     end
-    
-    Vendors.get_vendors(fs, geo, pagetok=data['next_page_token']) 
+
+    Vendors.get_vendors(fs, geo, pagetok=data['next_page_token']) if data['next_page_token']
   end
   
   module_function :get_food_sources_by_region

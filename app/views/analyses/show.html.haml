@@ -1,8 +1,8 @@
 -#- content_for :head do
 = javascript_tag do
   var center_point = #{raw resource.geo_region.center_point.to_json}
-  var region_data = #{raw resource.geo_regions.to_json}
-  var food_data = #{raw resource.located_food_sources.to_json}
+  var region_data = #{raw resource.analysis_geo_region_scores.to_json}
+  var food_data = #{raw resource.food_sources_near_the_region.to_json}
 
 %section
   .col-xs-9
@@ -19,7 +19,7 @@
     - if resource.analysis_complete?
 
       %div{style: 'width: 100%;'}
-        #map{style: 'width: 100%; height: 400px;'}
+        #map{style: 'width: 100%; height: 800px;'}
 
       %h3.page-header Located Food Sources
       %p
@@ -45,6 +45,9 @@
                 RISK
                 %code= region.risk_score
               = geo_region_coords region.geo_region
+              %span
+                POVERTY RATE
+                %code= region.geo_region.income_data['poverty_rate']
 
   .col-xs-3
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}

@@ -7,8 +7,17 @@ module AnalysisWorker
       Rails.logger.info "Beginning analysis ##{region.analysis.id} region ##{region.geo_region.id}"
 
       # region.risk_score = rand(0..10) * rand(0..10)
+      closest_sources = ClosestSources.new region.analysis.food_sources_near_the_region
+
       puts "income_data: #{region.geo_region.income_data}"
-      region.risk_score = region.geo_region.income_data['poverty_rate'].to_f * 100
+
+      nearest_healthy = closest_sources.nearest_healthy_source region.geo_region
+      nearest_unhealthy = closest_sources.nearest_unhealthy_source region.geo_region
+
+      distance_to_healthy = closest_sources.distance_between region.geo_region.center_lat, region.geo_region.center_lon, nearest_healthy.lat, nearest_healthy.lon
+      distance_to_unhealthy = closest_sources.distance_between region.geo_region.center_lat, region.geo_region.center_lon, nearest_unhealthy.lat, nearest_unhealthy.lon
+
+      region.risk_score = (region.geo_region.income_data['poverty_rate'].to_f * 100) + (((distance_to_healthy - distance_to_unhealthy) / [distance_to_healthy, distance_to_unhealthy].max) * 50)
 
       region.save!
     end

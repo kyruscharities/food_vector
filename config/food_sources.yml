@@ -1,14 +1,14 @@
 healthy:
   largest:
-#    - Walmart
+    - Walmart
     - Kroger
-#    - Albertsons
+    - Albertsons
     - Safeway
 #    - Publix
 #    - Winn-Dixie
 #    - Dairy Farm
 #    - Shoprite
-#    - Target
+    - Target
 
 #  natural:
 #    - Bristol Farms
@@ -294,3 +294,6 @@ healthy:
 #
 unhealthy:
   - 7\-11
+  - Burger King
+  - McDonalds
+  - Wendys

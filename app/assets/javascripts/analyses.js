@@ -19,8 +19,8 @@ $(document).ready(function () {
         var regionData = [];
         for (var i = 0; i < region_data.length; i++) {
             regionData.push({
-                location: new google.maps.LatLng(food_data[i].geo_region.center_lat,
-                    food_data[i].geo_region.center_lon),
+                location: new google.maps.LatLng(region_data[i].geo_region.center_lat,
+                    region_data[i].geo_region.center_lon),
                 weight: parseInt(region_data[i].risk_score)
             });
         }
@@ -29,7 +29,8 @@ $(document).ready(function () {
             data: regionData,
             dissipating: false,
 //        maxIntensity: 1000,
-            radius: 0.006
+            radius: 0.0035
+//            radius: 300
         });
 
         heatmap.setMap(map);

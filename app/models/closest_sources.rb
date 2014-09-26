@@ -27,12 +27,15 @@ class ClosestSources
     end
   end
 
-  def initialize
+  def initialize(located_food_sources)
 
-    fake_data()
+    @healthy_sources = located_food_sources.where(food_sources: {healthy: true})
+    @unhealthy_sources = located_food_sources.where(food_sources: {healthy: false})
+    # fake_data()
 
     # Index the located food sources for use with Kdtree
     @healthy_sources_indexed = []
+    puts "number of healthy sources: #{@healthy_sources}"
     @healthy_sources.each_with_index { |lfs, i|
       @healthy_sources_indexed.push([lfs.lat, lfs.lon, i])
     }
@@ -63,6 +66,23 @@ class ClosestSources
 
   def nearest_sources(geo_region)
     return [nearest_healthy_source(geo_region), nearest_unhealthy_source(geo_region)]
+  end
+
+  def distance_between(lat1, lon1, lat2, lon2)
+    rad_per_deg = Math::PI/180  # PI / 180
+    rkm = 6371                  # Earth radius in kilometers
+    rm = rkm * 1000             # Radius in meters
+
+    dlon_rad = (lon2-lon1) * rad_per_deg  # Delta, converted to rad
+    dlat_rad = (lat2-lat1) * rad_per_deg
+
+    lat1_rad, lon1_rad = [lat1, lon1].map! {|i| i * rad_per_deg }
+    lat2_rad, lon2_rad = [lat2, lon2].map! {|i| i * rad_per_deg }
+
+    a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
+    c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+
+    rm * c # Delta in meters
   end
 
 end
