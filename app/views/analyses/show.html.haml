@@ -1,7 +1,7 @@
 -#- content_for :head do
 = javascript_tag do
   var center_point = #{raw resource.geo_region.center_point.to_json}
-  var region_data = #{raw resource.analyzed_geo_regions.to_json}
+  var region_data = #{raw resource.geo_regions.to_json}
   var food_data = #{raw resource.located_food_sources.to_json}
 
 %section
@@ -38,13 +38,13 @@
 
       %h3.page-header Analysis Details
       %ul
-        - resource.analyzed_geo_regions.each do |region|
+        - resource.analysis_geo_region_scores.each do |region|
           %li
             %p
               %span{style: 'display: inline-block;min-width: 100px'}
                 RISK
                 %code= region.risk_score
-              = geo_region_coords region
+              = geo_region_coords region.geo_region
 
   .col-xs-2
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}

@@ -11,7 +11,8 @@ class Analysis < ActiveRecord::Base
   validates_presence_of :geo_region
   accepts_nested_attributes_for :geo_region, allow_destroy: true
 
-  has_many :analyzed_geo_regions, class_name: 'GeoRegion'
+  has_many :analysis_geo_region_scores
+  has_many :geo_regions, through: :analysis_geo_region_scores
 
   delegate :nw, to: :geo_region
   delegate :se, to: :geo_region
@@ -27,7 +28,7 @@ class Analysis < ActiveRecord::Base
   end
 
   def clear_analysis_results!
-    analyzed_geo_regions.delete_all
+    analysis_geo_region_scores.delete_all
     located_food_sources.delete_all
   end
 
@@ -52,21 +53,21 @@ class Analysis < ActiveRecord::Base
     clear_analysis_results!
 
     # identify and store all the regions
-    GeoRegionSplitter.split(geo_region, 900).each { |r| analyzed_geo_regions.append r }
+    GeoRegionSplitter.split(geo_region).each { |r| analysis_geo_region_scores.append AnalysisGeoRegionScore.create! geo_region: r, analysis: self }
 
-    raise 'No suitable geographic regions found to analyze' if analyzed_geo_regions.empty?
+    raise 'No suitable geographic regions found to analyze' if analysis_geo_region_scores.empty?
 
     # calculate all the risk scores
-    analyzed_geo_regions.each { |r| r.calculate_risk_score }
+    analysis_geo_region_scores.each { |r| r.calculate_risk_score }
   end
 
   def analysis_complete?
     # analysis is complete when all blocks have a risk score
-    analyzed_geo_regions.where(risk_score: nil).empty?
+    analysis_geo_region_scores.where(risk_score: nil).empty?
   end
 
   def analysis_progress
-    "#{analyzed_geo_regions.where.not(risk_score: nil).count} / #{analyzed_geo_regions.count}"
+    "#{analysis_geo_region_scores.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.count}"
   end
 
   def init
