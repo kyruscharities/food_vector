@@ -20,7 +20,7 @@ class Ability
   end
 
   def normal_user
-    can [:create, :index], Analysis
+    can :create, Analysis
     can :manage, Analysis, :user_id => @user.id
   end
 end
