@@ -10,7 +10,11 @@ $(document).ready(function () {
         var mapOptions = {
             zoom: 9,
             center: new google.maps.LatLng(center_point.lat, center_point.lon),
-            mapTypeId: google.maps.MapTypeId.MAP
+            mapTypeId: google.maps.MapTypeId.MAP,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_LEFT
+            }
         };
 
         map = new google.maps.Map(document.getElementById('map'),
@@ -33,10 +37,6 @@ $(document).ready(function () {
         });
 
         heatmap.setMap(map);
-
-        function toggleHeatmap() {
-            heatmap.setMap(heatmap.getMap() ? null : map);
-        }
 
         // Split healthy/unheathy located food sources and put on map
         var healthyFoodData = [];
@@ -70,27 +70,25 @@ $(document).ready(function () {
             });
         }
 
-        $('#toggle-heatmap').prop('checked', true);
-        $('#toggle-healthy').prop('checked', true);
-        $('#toggle-unhealthy').prop('checked', true);
-
-        $('#toggle-heatmap').click(toggleHeatmap())
+        $('#toggle-heatmap').click(function () {
+            heatmap.setMap(heatmap.getMap() ? null : map);
+        });
 
         $('#toggle-healthy').click(function() {
-            for (var i = 0; i < healthyFoodData.length; i++) {
-                var thisMap = healthyFoodData[i].get('map');
-                thisMap = thisMap ? null : map
-                healthyFoodData[i].setMap(thisMap);
-            }
-        })
+            toggle_markers(healthyFoodData)
+        });
 
         $('#toggle-unhealthy').click(function() {
-            for (var i = 0; i < unhealthyFoodData.length; i++) {
-                var thisMap = unhealthyFoodData[i].get('map');
+            toggle_markers(unhealthyFoodData)
+        });
+
+        function toggle_markers(foodData) {
+            for (var i = 0; i < foodData.length; i++) {
+                var thisMap = foodData[i].get('map');
                 thisMap = thisMap ? null : map
-                unhealthyFoodData[i].setMap(thisMap);
+                foodData[i].setMap(thisMap);
             }
-        })
+        }
     });
 
     $('body.analyses.new').ready(function () {
