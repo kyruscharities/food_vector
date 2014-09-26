@@ -155,4 +155,23 @@ $(document).ready(function () {
             $('#analysis_geo_region_attributes_se_lon').val(se_lon);
         });
     });
+
+    $('body.analyses.index').ready(function () {
+        console.log("loading index stuff");
+
+        var src = 'http://maps.google.com/maps/api/staticmap?size=512x400&visible=';
+
+        for (var i = 0; i < analyses_data.length; i++) {
+            var analysis = analyses_data[i]
+
+            var bounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(analysis.geo_region.se_lat, analysis.geo_region.nw_lon),
+                new google.maps.LatLng(analysis.geo_region.nw_lat, analysis.geo_region.se_lon)
+            )
+
+            var img = $('<img class="static-map">');
+            img.attr('src', src + bounds.getSouthWest().toUrlValue() + '|' + bounds.getNorthEast().toUrlValue());
+            $('#map-image-' + analysis.id).html(img)
+        }
+    });
 })

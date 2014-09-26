@@ -61,4 +61,8 @@ class Analysis < ActiveRecord::Base
   def init
     build_geo_region unless geo_region
   end
+
+  def as_json(options={})
+    super(options.merge({include: :geo_region}))
+  end
 end

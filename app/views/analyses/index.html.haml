@@ -1,3 +1,6 @@
+= javascript_tag do
+  var analyses_data = #{raw collection.to_json}
+
 %section
   .col-md-12
     %h1.page-header
@@ -11,18 +14,16 @@
         = link_to 'Start a new analysis.', new_resource_path
 
     - else
-      %table.table.table-bordered.table-striped
-        %tr
-          %th Name
-          %th Geo Region
-          %th
-
+      .row
         - collection.order(:updated_at).each do |resource|
-          %tr
-            %td= link_to resource.name, resource
+          .col-xs-12.col-sm-6
+            %h2
+              = link_to resource.name, resource
+              %span.pull-right
+                = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
+                  %i.fa.fa-trash
 
-            %td= geo_region_coords resource
+            = link_to resource do
+              .map-static-image{id: "map-image-#{resource.id}"}
 
-            %td.text-center
-              = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
-                %i.fa.fa-trash
+            %hr
