@@ -16,17 +16,17 @@ $(document).ready(function () {
         map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
 
-        var foodData = [];
-        for (var i = 0; i < food_data.length; i++) {
-            foodData.push({
+        var regionData = [];
+        for (var i = 0; i < region_data.length; i++) {
+            regionData.push({
                 location: new google.maps.LatLng(food_data[i].geo_region.center_lat,
-                food_data[i].geo_region.center_lon),
-                weight: parseInt(food_data[i].risk_score)
+                    food_data[i].geo_region.center_lon),
+                weight: parseInt(region_data[i].risk_score)
             });
         }
 
         heatmap = new google.maps.visualization.HeatmapLayer({
-            data: foodData,
+            data: regionData,
             dissipating: false,
 //        maxIntensity: 1000,
             radius: 0.006
@@ -36,6 +36,25 @@ $(document).ready(function () {
 
         function toggleHeatmap() {
             heatmap.setMap(heatmap.getMap() ? null : map);
+        }
+
+        // Split healthy/unheathy located food sources and put on map
+        var healthyFoodData = [];
+        var unheathlyFoodData = [];
+        for (var i = 0; i < food_data.length; i++) {
+            var newMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(food_data[i].lat, food_data[i].lon),
+                map: map,
+                title: food_data[i].food_source.business_name
+            });
+            console.log(food_data[i])
+            if (food_data[i].food_source.healthy) {
+                newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                healthyFoodData.push(newMarker);
+            } else {
+                newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                unheathlyFoodData.push(newMarker);
+            }
         }
     });
 

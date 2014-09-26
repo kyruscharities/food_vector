@@ -2,7 +2,7 @@
 Install things
 
     bundle install
-    
+
 Setup your database
 
     bundle exec rake db:setup
@@ -14,6 +14,10 @@ Setup your database
 Run sidekiq
 
     bundle exec sidekiq -c 1
+
+Run redis
+
+    redis-server
 
 Run the server
 
