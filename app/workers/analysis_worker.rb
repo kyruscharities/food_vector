@@ -14,11 +14,14 @@ module AnalysisWorker
       nearest_healthy = closest_sources.nearest_healthy_source region.geo_region
       nearest_unhealthy = closest_sources.nearest_unhealthy_source region.geo_region
 
-      distance_to_healthy = closest_sources.distance_between region.geo_region.center_lat, region.geo_region.center_lon, nearest_healthy.lat, nearest_healthy.lon
-      distance_to_unhealthy = closest_sources.distance_between region.geo_region.center_lat, region.geo_region.center_lon, nearest_unhealthy.lat, nearest_unhealthy.lon
+      distances = closest_sources.miles_to_nearest_sources region.geo_region
+      distance_to_healthy = distances[0]
+      distance_to_unhealthy = distances[1]
 
-      region.risk_score = (region.geo_region.income_data['poverty_rate'].to_f * 100) + (((distance_to_healthy - distance_to_unhealthy) / [distance_to_healthy, distance_to_unhealthy].max) * 50)
+      # region.risk_score = (region.geo_region.income_data['poverty_rate'].to_f * 100) + (((distance_to_healthy - distance_to_unhealthy) / [distance_to_healthy, distance_to_unhealthy].max) * 50)
 
+      scorer = RiskScore.new
+      region.risk_score = scorer.simple_risk_score region.geo_region.income_data['poverty_rate'], distance_to_healthy, distance_to_unhealthy
       region.save!
     end
   end

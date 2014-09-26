@@ -32,7 +32,7 @@ $(document).ready(function () {
             data: regionData,
             dissipating: false,
 //        maxIntensity: 1000,
-            radius: 0.0035
+            radius: 0.003
 //            radius: 300
         });
 
