@@ -2,10 +2,16 @@ class AnalysesController < ApplicationController
   inherit_resources
   load_and_authorize_resource
 
-  after_filter :do_analysis, only: [:create]
+  # after_filter :do_analysis, only: [:create]
 
   def analyze
     do_analysis
+    redirect_to analysis_path(resource)
+  end
+
+  def locate_food_sources
+    resource.locate_food_sources!
+    flash[:notice] = 'Started locating food sources'
     redirect_to analysis_path(resource)
   end
 

@@ -5,7 +5,7 @@
   var food_data = #{raw resource.located_food_sources.to_json}
 
 %section
-  .col-xs-10
+  .col-xs-9
     %h2.page-header
       = resource.name
       %span.pull-right
@@ -46,7 +46,7 @@
                 %code= region.risk_score
               = geo_region_coords region.geo_region
 
-  .col-xs-2
+  .col-xs-3
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}
       - if resource.analysis_complete?
         %i.fa.fa-4x.fa-check
@@ -63,4 +63,6 @@
           regions
 
       %p
-        = link_to 'Re-analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?
+        = link_to 'Locate Food Sources', locate_food_sources_analysis_path(resource), method: :post, class: 'btn btn-default' #if resource.analysis_complete?
+      %p
+        = link_to 'Analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?

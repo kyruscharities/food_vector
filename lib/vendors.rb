@@ -46,10 +46,12 @@ module Vendors
         loc_lat = loc['geometry']['location']['lat']
         loc_lon = loc['geometry']['location']['lng']
         
-        if loc_lat > geo.nw_lat or loc_lat < geo.se_lat
-          return
-        elsif loc_lon < geo.nw_lon or loc_lon > geo.se_lon
-          return
+        if loc_lat > (geo.nw_lat + 0.1) or loc_lat < (geo.se_lat - 0.1)
+          puts "breaking loop because too big or small of latitude"
+          next
+        elsif loc_lon < (geo.nw_lon - 0.1) or loc_lon > (geo.se_lon + 0.1)
+          puts "breaking loop because too big or small of long"
+          next
         end
         
         LocatedFoodSource.create! lat: loc_lat,

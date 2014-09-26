@@ -29,4 +29,27 @@ module AnalysisWorker
       analysis_geo_region.calculate_risk_score
     end
   end
+
+  class AnalysisGenerateRiskScores
+    include Sidekiq::Worker
+
+    def perform(analysis_id)
+      analysis = Analysis.find analysis_id
+      analysis.clear_analysis_results!
+
+      # identify and store all the regions
+      GeoRegionSplitter.split(analysis.geo_region).each { |r| analysis.analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: r, analysis: analysis) }
+
+      # get income data and calculate all the risk scores
+      analysis.analysis_geo_region_scores.each { |r| r.ensure_income_data }
+    end
+  end
+
+  class LocateFoodSourcesForGeoRegion
+    include Sidekiq::Worker
+
+    def perform(analysis_id)
+      Vendors.get_food_sources_by_region Analysis.find(analysis_id)
+    end
+  end
 end
