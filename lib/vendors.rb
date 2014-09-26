@@ -27,15 +27,21 @@ module Vendors
 
     begin
       response = RestClient.get request_url
+      puts "Results: #{response}"
     rescue => e
       puts "ERROR: Unhandled Exception - #{e}"
     end
-
+    
     if response.code == 200
       data = JSON.parse(response.to_str)
       
+      if data['results'].length == 0
+        puts "No results found for #{fs.business_name}. Breaking..."
+        return
+      end
+
       for loc in data['results']
-        puts "Located Food Source: #{location}"
+        puts "Located Food Source: #{loc}"
         
         loc_lat = loc['geometry']['location']['lat']
         loc_lon = loc['geometry']['location']['lng']
@@ -45,7 +51,7 @@ module Vendors
         elsif loc_lon < geo.nw_lon or loc_lon > geo.se_lon
           return
         end
-
+        
         LocatedFoodSource.create! lat: loc_lat,
                                   lon: loc_lon,
                                   price_rank: loc['price_level'],
