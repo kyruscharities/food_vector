@@ -1,3 +1,5 @@
+require 'geocoder'
+
 class ClosestSources
   def test
     gr = GeoRegion.new
@@ -6,7 +8,7 @@ class ClosestSources
     gr.se_lat=38.9601405-0.1
     gr.se_lon=-77.3921701+0.1
 
-    return nearest_sources(gr)
+    return miles_to_nearest_sources(gr)
   end
 
   def fake_data
@@ -69,20 +71,27 @@ class ClosestSources
   end
 
   def distance_between(lat1, lon1, lat2, lon2)
-    rad_per_deg = Math::PI/180  # PI / 180
-    rkm = 6371                  # Earth radius in kilometers
-    rm = rkm * 1000             # Radius in meters
+    rad_per_deg = Math::PI/180 # PI / 180
+    rkm = 6371 # Earth radius in kilometers
+    rm = rkm * 1000 # Radius in meters
 
-    dlon_rad = (lon2-lon1) * rad_per_deg  # Delta, converted to rad
+    dlon_rad = (lon2-lon1) * rad_per_deg # Delta, converted to rad
     dlat_rad = (lat2-lat1) * rad_per_deg
 
-    lat1_rad, lon1_rad = [lat1, lon1].map! {|i| i * rad_per_deg }
-    lat2_rad, lon2_rad = [lat2, lon2].map! {|i| i * rad_per_deg }
+    lat1_rad, lon1_rad = [lat1, lon1].map! { |i| i * rad_per_deg }
+    lat2_rad, lon2_rad = [lat2, lon2].map! { |i| i * rad_per_deg }
 
     a = Math.sin(dlat_rad/2)**2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlon_rad/2)**2
     c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
 
     rm * c # Delta in meters
+  end
+
+  def miles_to_nearest_sources(geo_region)
+    (nearest_healthy, nearest_unhealthy) = nearest_sources(geo_region)
+    miles_to_healthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_healthy.as_array, :units => :mi)
+    miles_to_unhealthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_unhealthy.as_array, :units => :mi)
+    return [miles_to_healthy, miles_to_unhealthy]
   end
 
 end

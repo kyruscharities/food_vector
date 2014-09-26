@@ -30,6 +30,7 @@ gem 'rolify'
 gem 'cancan'
 gem 'jquery-turbolinks'
 gem 'figaro'
+gem 'geocoder'
 
 group :development do
   gem 'better_errors'

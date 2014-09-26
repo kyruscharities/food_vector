@@ -16,4 +16,8 @@ class LocatedFoodSource < ActiveRecord::Base
   def as_json(options={})
     super(options.merge({include: :food_source}))
   end
+
+  def as_array
+    [lat, lon]
+  end
 end
