@@ -45,7 +45,7 @@ $(document).ready(function () {
         var drawn_rectangle;
 
         var mapOptions = {
-            zoom: 3,
+            zoom: 7,
             center: new google.maps.LatLng(40, -104),
             mapTypeId: google.maps.MapTypeId.MAP
         };
