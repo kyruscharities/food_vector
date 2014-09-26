@@ -13,6 +13,11 @@ class AnalysesController < ApplicationController
     resource.locate_food_sources!
     flash[:notice] = 'Started locating food sources'
     redirect_to analysis_path(resource)
+
+  def progress
+    analysis = Analysis.find(params[:id])
+
+    render json: { analyzed: analysis.analyzed_region_count, total: analysis.geo_regions.count }
   end
 
   private

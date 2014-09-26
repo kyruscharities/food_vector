@@ -55,7 +55,11 @@ class Analysis < ActiveRecord::Base
   end
 
   def analysis_progress
-    "#{analysis_geo_region_scores.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.count}"
+    "#{analyzed_region_count} / #{analysis_geo_region_scores.count}"
+  end
+
+  def analyzed_region_count
+    analysis_geo_region_scores.where.not(risk_score: nil).count
   end
 
   def init
