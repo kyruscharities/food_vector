@@ -15,5 +15,6 @@ module GeoRegionSplitter
                     se_lat: lat + INCREMENT,
                     se_lon: long + INCREMENT
     end
+    nil
   end
 end

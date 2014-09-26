@@ -56,11 +56,15 @@ class RiskScore
     end
   end
 
-  def game_theory_risk_score_with_income_tiers(individuals_below_poverty_line, miles_to_healthy_source, miles_to_unhealthy_source)
-    if miles_to_healthy_source > 3 || miles_to_healthy_source > miles_to_unhealthy_source * 1.3
-      individuals_below_poverty_line
-    else
-      0
-    end
-  end
+  # def game_theory_risk_score_with_income_tiers(individuals_by_income_tiers, miles_to_healthy_source, miles_to_unhealthy_source)
+  #   with_cars = 0
+  #   without_cars = 0
+  #
+  #
+  #   if miles_to_healthy_source > 3 || miles_to_healthy_source > miles_to_unhealthy_source * 1.3
+  #     individuals_below_poverty_line
+  #   else
+  #     0
+  #   end
+  # end
 end

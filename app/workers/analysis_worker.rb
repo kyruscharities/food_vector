@@ -24,9 +24,9 @@ module AnalysisWorker
       # region.risk_score = scorer.usda_approximate_risk_score region.geo_region.income_data['poverty_rate'], distance_to_healthy, distance_to_unhealthy
       # region.risk_score = scorer.simple_risk_score region.geo_region.income_data['poverty_rate'], distance_to_healthy, distance_to_unhealthy
       # region.risk_score = scorer.weighted_risk_score region.geo_region.income_data['poverty_rate'], distance_to_healthy, distance_to_unhealthy
-      region.risk_score = scorer.game_theory_risk_score region.geo_region.income_data['poverty_level']['individuals_below_poverty_line'], distance_to_healthy, distance_to_unhealthy
+      # region.risk_score = scorer.game_theory_risk_score region.geo_region.income_data['poverty_level']['individuals_below_poverty_line'], distance_to_healthy, distance_to_unhealthy
 
-      #region.risk_score = scorer.game_theory_risk_score_with_income_tiers region.geo_region.income_data['income_tiers'], distance_to_healthy, distance_to_unhealthy
+      region.risk_score = scorer.game_theory_risk_score_with_income_tiers region.geo_region.income_data['income_tiers'], distance_to_healthy, distance_to_unhealthy
 
       region.save!
     end
