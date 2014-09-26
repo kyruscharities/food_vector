@@ -6,14 +6,20 @@
     = f.input :description
     = f.hidden_field :user_id, value: current_user.id
 
-    %div{style: 'width: 800px;'}
-      #map{style: 'width: 800px; height: 400px;'}
+    %div{style: 'width: 100%; margin-bottom: 30px'}
+      #map{style: 'width: 100%; height: 400px;'}
 
     = f.simple_fields_for :geo_region do |gr|
-      = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)', input_html: { min: -85, max: 85}
-      = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }
-      = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)', input_html: { min: -85, max: 85}
-      = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)',input_html: {  min: -180, max: 180}
+      .row
+        .col-xs-12.col-md-6
+          = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)', input_html: { min: -85, max: 85}
+        .col-xs-12.col-md-6
+          = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }
+      .row
+        .col-xs-12.col-md-6
+          = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)', input_html: { min: -85, max: 85}
+        .col-xs-12.col-md-6
+          = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)',input_html: {  min: -180, max: 180}
 
   .form-actions
     = f.button :submit, 'Run Analysis'
