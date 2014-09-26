@@ -1,13 +1,21 @@
 # Getting Started
+Install things
 
     bundle install
+    
+Setup your database
+
     bundle exec rake db:setup
 
     # want the example users?
     bundle exec rake dev:setup
     ... now you have user@foo.com and admin@foo.com (password = password)
 
-# Run the server
+Run sidekiq
+
+    bundle exec sidekiq -c 1
+
+Run the server
 
     rails server
 
