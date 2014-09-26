@@ -8,7 +8,6 @@ $(document).ready(function () {
         var handler, map;
 
         var mapOptions = {
-            zoom: 9,
             center: new google.maps.LatLng(center_point.lat, center_point.lon),
             mapTypeId: google.maps.MapTypeId.MAP
         };
@@ -33,6 +32,25 @@ $(document).ready(function () {
         });
 
         heatmap.setMap(map);
+
+        var bounds = new google.maps.LatLngBounds();
+       // var nw_pt = new google.maps.LatLng(bound_data.nw_lat + bound_data.nw_lat * .10, bound_data + bound_data.nw_lon * .10);
+        //var se_pt = new google.maps.LatLng(bound_data.se_lat + bound_data.se_lat * .10, bound_data.se_lon + bound_data.se_lon * .10);
+        var nw_pt = new google.maps.LatLng(bound_data.nw_lat * 1.0001, bound_data.nw_lon * 1.0011);
+        var se_pt = new google.maps.LatLng(bound_data.se_lat * .9999,  bound_data.se_lon * .999);
+        bounds.extend(nw_pt);
+        bounds.extend(se_pt);
+       // center = bounds.getCenter();
+        //map.setCenter(pt);
+        map.fitBounds(bounds);
+        map.setCenter(new google.maps.LatLng(center_point.lat, center_point.lon));
+//        var listener = google.maps.event.addListener(map, "idle", function() {
+//            map.setZoom(map.getZoom()-1);
+//            google.maps.event.removeListener(listener);
+//        });
+//        console.log("Current zoom" + map.getZoom());
+//       // map.setZoom(map.getZoom()-1);
+//        console.log("Current zoom now" + map.getZoom());
 
         function toggleHeatmap() {
             heatmap.setMap(heatmap.getMap() ? null : map);

@@ -36,6 +36,19 @@ class GeoRegion < ActiveRecord::Base
     }
   end
 
+  def nw_se_point
+    {
+        nw_lat: nw_lat,
+        nw_lon: nw_lon,
+        se_lat: se_lat,
+        se_lon: se_lon
+    }
+  end
+
+  def calculate_risk_score
+    AnalysisWorker::GeoRegionRiskScoreCalculatorWorker.perform_async self.id
+  end
+
   def nw
     [nw_lat, nw_lon]
   end

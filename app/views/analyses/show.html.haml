@@ -3,6 +3,8 @@
   var center_point = #{raw resource.geo_region.center_point.to_json}
   var region_data = #{raw resource.geo_regions.to_json}
   var food_data = #{raw resource.located_food_sources.to_json}
+  var bound_data = #{raw resource.geo_region.nw_se_point.to_json}
+
 
 %section
   .col-xs-10
