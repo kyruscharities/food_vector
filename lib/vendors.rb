@@ -2,7 +2,7 @@ require 'rest_client'
 require 'json'
 require 'cgi'
 
-API_KEY = 'AIzaSyCv1Lh2rQQI0QTLXNQS_DZJFbzrRX_EH2s'
+API_KEY = ENV["GOOGLEMAPS_API_KEY"]
 
 module Vendors
   def get_food_sources_by_region(analysis)

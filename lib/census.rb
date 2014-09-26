@@ -16,7 +16,7 @@ class Census
   # The API key.  Registered to ryan.green@kyrus-tech.com
   # This can be updated using the form at:
   # http://www.census.gov/data/developers/data-sets/economic-census.html
-  @key = "92d57a5b97faad86177b0db820e4280e4bb24deb"
+  @key = ENV["CENSUS_API_KEY"]
 
   def initialize
     @tract_infos = {}
