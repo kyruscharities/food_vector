@@ -3,8 +3,9 @@
 require 'net/http'
 require 'rubygems'
 require 'json'
+require 'rest_client'
 
-module Census
+class Census
 
   # The variables to be returned from the query
   @variables = "ST,COUNTY,OPTAX,EMP,PAYANN"
@@ -17,6 +18,10 @@ module Census
   # http://www.census.gov/data/developers/data-sets/economic-census.html
   @key = "92d57a5b97faad86177b0db820e4280e4bb24deb"
 
+  def initialize
+    @tract_infos = {}
+  end
+
   # Get the median salary from all salaries in the specified array
   def self.getMedian(salaries)
     sorted = salaries.sort
@@ -28,77 +33,100 @@ module Census
   def self.getUrl(url)
     parsed_url = URI.parse(url)
     req = Net::HTTP::Get.new(parsed_url.to_s)
-    res = Net::HTTP.start(parsed_url.host, parsed_url.port) {|http|
-        http.request(req)
+    res = Net::HTTP.start(parsed_url.host, parsed_url.port) { |http|
+      http.request(req)
     }
     return res.body
   end
 
   # Get the median income for the specified lat or long
-  def self.getIncomeForCoordinate(lat, long)
+  def getIncomeForCoordinate(lat, long)
     fips = "http://data.fcc.gov/api/block/find?latitude=#{lat}&longitude=#{long}&showall=false&format=json"
-    result = self.getUrl(fips)
-    parsed = JSON.parse(result)
+    result = RestClient.get fips
+    parsed = JSON.parse(result.body)
     county = parsed["County"]["FIPS"][2..-1]
     state = parsed["State"]["FIPS"]
-    return self.getIncomeForLocation(state, county)
+    block = parsed["Block"]["FIPS"]
+
+    tract = block[5..10]
+
+    identifier = "#{state}#{county}#{tract}"
+    puts "tract_infos: #{@tract_infos}"
+    puts "tract_infos[identifier]: #{@tract_infos[identifier]}"
+    puts "identifier: #{identifier}"
+    @tract_infos[identifier] ||= Census.getIncomeForLocation(state, county, tract)
+
+    @tract_infos[identifier]
   end
 
   # Get the median income for the specified state and county
-  def self.getIncomeForLocation(state, county)
-    total_payroll = 0         # The total payroll amount for the area
-    total_employees = 0       # The total number of employees for the area
-    all_salaries = Array.new  # Container of all employees salaries
+  def self.getIncomeForLocation(state, county, tract)
+    total_payroll = 0 # The total payroll amount for the area
+    total_employees = 0 # The total number of employees for the area
+    all_salaries = Array.new # Container of all employees salaries
 
     # Query the specified area
     location = "county:#{county}&in=state:#{state}"
-    census = "http://api.census.gov/data/2007/ewks?get=" + @variables + "&for=" + location + "&NAICS2007=" + @sector + "&key=" + @key
-    result = self.getUrl(census)
-    if result.to_s == ""
-      # No results
-      return 0
-    end
+    # census = "http://api.census.gov/data/2007/ewks?get=" + @variables + "&for=" + location + "&NAICS2007=" + @sector + "&key=" + @key
+    url = "http://api.census.gov/data/2012/acs5?key=#{@key}&get=B17001_001E,B17001_002E,B19113_001E&for=tract:#{tract}&in=state:#{state}+county:#{county}"
+    puts "url: #{url}"
+    population_data = RestClient.get url
+    # poverty_population_data = RestClient.get "http://api.census.gov/data/2012/acs5?key=#{@key}&get=B17001_002E&for=tract:#{tract}&in=state:#{state}+county:#{county}"
+    # median_income_data = RestClient.get "http://api.census.gov/data/2012/acs5?key=#{@key}&get=B19113_001E&for=tract:#{tract}&in=state:#{state}+county:#{county}"
 
-    # Parse the results
-    # A line can be returned for each sector (NAICS) and tax type (OPTAX)
-    # The first line is a header, so it is skipped
-    lines = result.split(' ')
-    for n in 1..(lines.length-1)
+    puts "poverty_pop_data: #{population_data.body}"
+    parsed_data = JSON.parse population_data.body
+    {
+        poverty_rate: parsed_data[1][1].to_f / parsed_data[1][0].to_f,
+        median_income: parsed_data[1][2]
+    }
 
-      # Split a line into tokens.  Each token is a variable for an entry.
-      tokens = lines[n].split(',')
-
-      # Parse out the employees and payroll variables
-      employees = tokens[3].gsub(/\s|"|'/, '').to_i
-      payroll = tokens[4].gsub(/\s|"|'/, '').to_i * 1000
-
-      # Prevent divide by zero by filtering out erroneous entries
-      if employees == 0
-        next
-      end
-
-      # Keep count of the total employees and payroll.
-      # Use for calculating the average.
-      total_employees = total_employees + employees
-      total_payroll = total_payroll + payroll
-
-      # Calculate the average salary.  Currently this is not
-      # needed, but it is much less resource intensive than
-      # calculating the median, so it may be of interest to
-      # use this instead.  I.e., leaving it here for now.
-      avg_salary = payroll / employees
-
-      # Push the average salary for all employees in the sector.
-      for employee in 1..employees
-        all_salaries.push(avg_salary)  
-      end
-    end
-
-    # Calculate the average and the median.  Only the median
-    # is currently used.  See comment above.
-    avg = total_payroll / total_employees
-    median = self.getMedian(all_salaries)
-    return median
+    # result = self.getUrl(census)
+    # if result.to_s == ""
+    #   # No results
+    #   return 0
+    # end
+    #
+    # # Parse the results
+    # # A line can be returned for each sector (NAICS) and tax type (OPTAX)
+    # # The first line is a header, so it is skipped
+    # lines = result.split(' ')
+    # for n in 1..(lines.length-1)
+    #
+    #   # Split a line into tokens.  Each token is a variable for an entry.
+    #   tokens = lines[n].split(',')
+    #
+    #   # Parse out the employees and payroll variables
+    #   employees = tokens[3].gsub(/\s|"|'/, '').to_i
+    #   payroll = tokens[4].gsub(/\s|"|'/, '').to_i * 1000
+    #
+    #   # Prevent divide by zero by filtering out erroneous entries
+    #   if employees == 0
+    #     next
+    #   end
+    #
+    #   # Keep count of the total employees and payroll.
+    #   # Use for calculating the average.
+    #   total_employees = total_employees + employees
+    #   total_payroll = total_payroll + payroll
+    #
+    #   # Calculate the average salary.  Currently this is not
+    #   # needed, but it is much less resource intensive than
+    #   # calculating the median, so it may be of interest to
+    #   # use this instead.  I.e., leaving it here for now.
+    #   avg_salary = payroll / employees
+    #
+    #   # Push the average salary for all employees in the sector.
+    #   for employee in 1..employees
+    #     all_salaries.push(avg_salary)
+    #   end
+    # end
+    #
+    # # Calculate the average and the median.  Only the median
+    # # is currently used.  See comment above.
+    # avg = total_payroll / total_employees
+    # median = self.getMedian(all_salaries)
+    # return median
   end
 end
 
