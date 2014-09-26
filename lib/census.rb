@@ -36,16 +36,19 @@ class Census
   end
 
   # Get the median income for the specified lat or long
-  def self.getIncomeForCoordinate(lat, long)
+  def self.coordinate_to_location(lat, long)
     fips = "http://data.fcc.gov/api/block/find?latitude=#{lat}&longitude=#{long}&showall=false&format=json"
     result = RestClient.get fips
     parsed = JSON.parse(result.body)
-    county = parsed["County"]["FIPS"][2..-1]
-    state = parsed["State"]["FIPS"]
-    block = parsed["Block"]["FIPS"]
-    tract = block[5..10]
+    OpenStruct.new county: parsed["County"]["FIPS"][2..-1],
+                   state: parsed["State"]["FIPS"],
+                   tract: parsed["Block"]["FIPS"][5..10]
+  end
 
-    Census.getIncomeForLocation(state, county, tract)
+  # Get the median income for the specified lat or long
+  def self.getIncomeForCoordinate(lat, long)
+    location = coordinate_to_location lat, long
+    getIncomeForLocation(location.state, location.county, location.tract)
   end
 
   # Get the median income for the specified state and county
@@ -55,10 +58,6 @@ class Census
     if existing_geo_region_in_census_tract
       existing_geo_region_in_census_tract.income_data
     else
-      total_payroll = 0 # The total payroll amount for the area
-      total_employees = 0 # The total number of employees for the area
-      all_salaries = Array.new # Container of all employees salaries
-
       # Query the specified area
       url = "http://api.census.gov/data/2012/acs5?key=#{@key}&get=B17001_001E,B17001_002E,B19113_001E&for=tract:#{tract}&in=state:#{state}+county:#{county}"
       puts "url: #{url}"
@@ -73,6 +72,49 @@ class Census
           median_income: parsed_data[1][2],
           identifier: "#{state}#{county}#{tract}"
       }
+    end
+  end
+
+  # Get the median income for the specified state and county
+  def self.get_households_by_income_tier(lat, long)
+    location = coordinate_to_location lat, long
+    identifier = "#{location.state}#{location.county}#{location.tract}"
+
+    existing_geo_region_in_census_tract = GeoRegion.find_by census_tract_id: identifier
+
+    if existing_geo_region_in_census_tract
+      existing_geo_region_in_census_tract.income_data
+    else
+      # Query the specified area
+      to_get = {
+          'B19001_002E' => '<10',
+          'B19001_003E' => '<15',
+          'B19001_004E' => '<20',
+          'B19001_005E' => '<25',
+          'B19001_006E' => '<30',
+          'B19001_007E' => '<35',
+          'B19001_008E' => '<40',
+          'B19001_009E' => '<45',
+          'B19001_010E' => '<50',
+          'B19001_011E' => '<60',
+          'B19001_012E' => '<75',
+          'B19001_013E' => '<100',
+          'B19001_014E' => '<125',
+          'B19001_015E' => '<150',
+          'B19001_016E' => '<200',
+          'B19001_017E' => '>200',
+      }
+      url = "http://api.census.gov/data/2012/acs5?key=#{@key}&get=#{to_get.keys.join(',')}&for=tract:#{location.tract}&in=state:#{location.state}+county:#{location.county}"
+      puts "url: #{url}"
+      population_data = RestClient.get url
+
+      parsed_data = JSON.parse population_data.body
+
+      useful_data = {}
+      Hash[parsed_data[0].zip(parsed_data[1])].each { |k, v| useful_data[to_get[k] || k] = v }
+
+      useful_data.merge identifier: identifier
+      useful_data
     end
   end
 end
