@@ -8,8 +8,7 @@ $(document).ready(function () {
         var handler, map;
 
         var mapOptions = {
-            zoom: 9,
-            center: new google.maps.LatLng(center_point.lat, center_point.lon),
+            center: new google.maps.LatLng(geo_region.center_lat, geo_region.center_lon),
             mapTypeId: google.maps.MapTypeId.MAP,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -37,6 +36,14 @@ $(document).ready(function () {
         });
 
         heatmap.setMap(map);
+
+        // get get lat lon and scale out a bit to auto zoom to our data
+        var bounds = new google.maps.LatLngBounds();
+        var nw_pt = new google.maps.LatLng(geo_region.nw_lat * 1.0001, geo_region.nw_lon * 1.0011);
+        var se_pt = new google.maps.LatLng(geo_region.se_lat * .9999,  geo_region.se_lon * .999);
+        bounds.extend(nw_pt);
+        bounds.extend(se_pt);
+        map.fitBounds(bounds);
 
         // Split healthy/unheathy located food sources and put on map
         var healthyFoodData = [];
@@ -97,7 +104,7 @@ $(document).ready(function () {
         var drawn_rectangle;
 
         var mapOptions = {
-            zoom: 3,
+            zoom: 7,
             center: new google.maps.LatLng(40, -104),
             mapTypeId: google.maps.MapTypeId.MAP
         };

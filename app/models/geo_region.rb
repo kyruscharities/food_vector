@@ -29,13 +29,6 @@ class GeoRegion < ActiveRecord::Base
     self.center_lon = nw_lon / 2 + se_lon / 2
   end
 
-  def center_point
-    {
-        lat: center_lat,
-        lon: center_lon
-    }
-  end
-
   def center_point_as_array
     return [self.center_lat, self.center_lon]
   end
