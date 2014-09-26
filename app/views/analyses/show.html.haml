@@ -1,9 +1,8 @@
 -#- content_for :head do
 = javascript_tag do
-  var center_point = #{raw resource.geo_region.center_point.to_json}
-  var region_data = #{raw resource.geo_regions.to_json}
+  var geo_region = #{raw resource.geo_region.to_json}
+  var region_data = #{raw resource.analysis_geo_region_scores.to_json}
   var food_data = #{raw resource.located_food_sources.to_json}
-  var bound_data = #{raw resource.geo_region.nw_se_point.to_json}
 
 
 %section
@@ -20,8 +19,20 @@
 
     - if resource.analysis_complete?
 
-      %div{style: 'width: 100%;'}
+      %div{style: 'width: 100%; position: relative'}
         #map{style: 'width: 100%; height: 400px;'}
+        #map-controls
+          %label
+            = check_box_tag "toggle-heatmap", 1, true
+            Food Desert Risk
+
+          %label
+            = check_box_tag "toggle-healthy", 1, true
+            Healthy Food Sources
+
+          %label
+            = check_box_tag "toggle-unhealthy", 1, true
+            Unhealthy Food Sources
 
       %h3.page-header Located Food Sources
       %p

@@ -1,3 +1,5 @@
+require 'geocoder'
+
 class ClosestSources
   def test
     gr = GeoRegion.new
@@ -6,7 +8,7 @@ class ClosestSources
     gr.se_lat=38.9601405-0.1
     gr.se_lon=-77.3921701+0.1
 
-    return nearest_sources(gr)
+    return miles_to_nearest_sources(gr)
   end
 
   def fake_data
@@ -27,9 +29,10 @@ class ClosestSources
     end
   end
 
-  def initialize
+  def initialize(healthy_sources_in, unhealthy_source_in)
 
-    fake_data()
+    @healthy_sources = healthy_sources_in
+    @unhealthy_sources = unhealthy_source_in
 
     # Index the located food sources for use with Kdtree
     @healthy_sources_indexed = []
@@ -63,6 +66,13 @@ class ClosestSources
 
   def nearest_sources(geo_region)
     return [nearest_healthy_source(geo_region), nearest_unhealthy_source(geo_region)]
+  end
+
+  def miles_to_nearest_sources(geo_region)
+    (nearest_healthy, nearest_unhealthy) = nearest_sources(geo_region)
+    miles_to_healthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_healthy.as_array, :units => :mi)
+    miles_to_unhealthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_unhealthy.as_array, :units => :mi)
+    return [miles_to_healthy, miles_to_unhealthy]
   end
 
 end

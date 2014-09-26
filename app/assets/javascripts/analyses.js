@@ -8,8 +8,12 @@ $(document).ready(function () {
         var handler, map;
 
         var mapOptions = {
-            center: new google.maps.LatLng(center_point.lat, center_point.lon),
-            mapTypeId: google.maps.MapTypeId.MAP
+            center: new google.maps.LatLng(geo_region.center_lat, geo_region.center_lon),
+            mapTypeId: google.maps.MapTypeId.MAP,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_LEFT
+            }
         };
 
         map = new google.maps.Map(document.getElementById('map'),
@@ -18,8 +22,8 @@ $(document).ready(function () {
         var regionData = [];
         for (var i = 0; i < region_data.length; i++) {
             regionData.push({
-                location: new google.maps.LatLng(food_data[i].geo_region.center_lat,
-                    food_data[i].geo_region.center_lon),
+                location: new google.maps.LatLng(region_data[i].geo_region.center_lat,
+                    region_data[i].geo_region.center_lon),
                 weight: parseInt(region_data[i].risk_score)
             });
         }
@@ -35,33 +39,61 @@ $(document).ready(function () {
 
         // get get lat lon and scale out a bit to auto zoom to our data
         var bounds = new google.maps.LatLngBounds();
-        var nw_pt = new google.maps.LatLng(bound_data.nw_lat * 1.0001, bound_data.nw_lon * 1.0011);
-        var se_pt = new google.maps.LatLng(bound_data.se_lat * .9999,  bound_data.se_lon * .999);
+        var nw_pt = new google.maps.LatLng(geo_region.nw_lat * 1.0001, geo_region.nw_lon * 1.0011);
+        var se_pt = new google.maps.LatLng(geo_region.se_lat * .9999,  geo_region.se_lon * .999);
         bounds.extend(nw_pt);
         bounds.extend(se_pt);
         map.fitBounds(bounds);
 
-
-        function toggleHeatmap() {
-            heatmap.setMap(heatmap.getMap() ? null : map);
-        }
-
         // Split healthy/unheathy located food sources and put on map
         var healthyFoodData = [];
-        var unheathlyFoodData = [];
+        var unhealthyFoodData = [];
         for (var i = 0; i < food_data.length; i++) {
             var newMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(food_data[i].lat, food_data[i].lon),
                 map: map,
                 title: food_data[i].food_source.business_name
             });
+
+            attachTitle(newMarker, food_data[i])
+
             console.log(food_data[i])
             if (food_data[i].food_source.healthy) {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
                 healthyFoodData.push(newMarker);
             } else {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-                unheathlyFoodData.push(newMarker);
+                unhealthyFoodData.push(newMarker);
+            }
+        }
+
+        function attachTitle(marker, located_food_source) {
+            var infowindow = new google.maps.InfoWindow({
+                content: located_food_source.food_source.business_name
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(marker.get('map'), marker);
+            });
+        }
+
+        $('#toggle-heatmap').click(function () {
+            heatmap.setMap(heatmap.getMap() ? null : map);
+        });
+
+        $('#toggle-healthy').click(function() {
+            toggle_markers(healthyFoodData)
+        });
+
+        $('#toggle-unhealthy').click(function() {
+            toggle_markers(unhealthyFoodData)
+        });
+
+        function toggle_markers(foodData) {
+            for (var i = 0; i < foodData.length; i++) {
+                var thisMap = foodData[i].get('map');
+                thisMap = thisMap ? null : map
+                foodData[i].setMap(thisMap);
             }
         }
     });
