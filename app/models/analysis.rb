@@ -32,33 +32,16 @@ class Analysis < ActiveRecord::Base
     located_food_sources.delete_all
   end
 
-  def generate_fake_data_points(num_points)
-    num_points.to_i.times do
-      temp_se_lat = rand(geo_region.se_lat..geo_region.nw_lat)
-      temp_se_lon = rand(geo_region.se_lon..geo_region.nw_lon)
-      temp_nw_lat = rand(temp_se_lat..geo_region.nw_lat)
-      temp_nw_lon = rand(temp_se_lon..geo_region.nw_lon)
-      puts "temp_se_lon: #{temp_se_lon}"
-      gr = GeoRegion.create! nw_lat: temp_nw_lat,
-                             nw_lon: temp_nw_lon,
-                             se_lat: temp_se_lat,
-                             se_lon: temp_se_lon
-
-      gened_block = AnalyzedGeoBlock.create!(geo_region: gr, risk_score: rand(0..100))
-      analyzed_geo_blocks << gened_block
-    end
-  end
-
   def analyze!
     clear_analysis_results!
 
     # identify and store all the regions
-    GeoRegionSplitter.split(geo_region).each { |r| analysis_geo_region_scores.append AnalysisGeoRegionScore.create! geo_region: r, analysis: self }
+    GeoRegionSplitter.split(geo_region).each { |r| analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: r, analysis: self) }
 
     raise 'No suitable geographic regions found to analyze' if analysis_geo_region_scores.empty?
 
     # calculate all the risk scores
-    analysis_geo_region_scores.each { |r| r.calculate_risk_score }
+    analysis_geo_region_scores.each { |r| r.ensure_income_data }
   end
 
   def analysis_complete?
