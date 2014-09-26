@@ -39,6 +39,10 @@ class Census
     return res.body
   end
 
+  def get_income_for_geo_region(geo_region)
+    
+  end
+
   # Get the median income for the specified lat or long
   def getIncomeForCoordinate(lat, long)
     fips = "http://data.fcc.gov/api/block/find?latitude=#{lat}&longitude=#{long}&showall=false&format=json"

@@ -22,6 +22,8 @@ class GeoRegion < ActiveRecord::Base
   belongs_to :analysis
   #validates_presence_of :analysis
 
+  serialize :income_data, JSON
+
   def calculate_center_point
     self.center_lat = nw_lat - ((nw_lat - se_lat) / 2)
     self.center_lon = nw_lon - ((nw_lon - se_lon) / 2)
