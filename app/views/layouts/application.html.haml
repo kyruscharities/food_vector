@@ -7,8 +7,7 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     -#= javascript_include_tag '//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry', 'data-turbolinks-track' => true
     = javascript_include_tag '//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js', 'data-turbolinks-track' => true
-    = javascript_include_tag '//maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization', 'data-turbolinks-track' => true
-    = javascript_include_tag '//maps.googleapis.com/maps/api/js?v=3.exp&libraries=drawing', 'data-turbolinks-track' => true
+    = javascript_include_tag '//maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,drawing', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield :head
     = csrf_meta_tags
