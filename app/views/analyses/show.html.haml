@@ -18,8 +18,16 @@
 
     - if resource.analysis_complete?
 
-      %div{style: 'width: 100%;'}
+      %div{style: 'width: 100%; position: relative'}
         #map{style: 'width: 100%; height: 400px;'}
+        %div{style: 'background-color: white; position: absolute; right: 10px; bottom: 10px;'}
+          Show:
+          = check_box_tag "toggle-heatmap"
+          Heatmap
+          = check_box_tag "toggle-healthy"
+          Healthy
+          = check_box_tag "toggle-unhealthy"
+          Unhealthy
 
       %h3.page-header Located Food Sources
       %p

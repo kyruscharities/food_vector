@@ -40,7 +40,7 @@ $(document).ready(function () {
 
         // Split healthy/unheathy located food sources and put on map
         var healthyFoodData = [];
-        var unheathlyFoodData = [];
+        var unhealthyFoodData = [];
         for (var i = 0; i < food_data.length; i++) {
             var newMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(food_data[i].lat, food_data[i].lon),
@@ -56,7 +56,7 @@ $(document).ready(function () {
                 healthyFoodData.push(newMarker);
             } else {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
-                unheathlyFoodData.push(newMarker);
+                unhealthyFoodData.push(newMarker);
             }
         }
 
@@ -69,6 +69,28 @@ $(document).ready(function () {
                 infowindow.open(marker.get('map'), marker);
             });
         }
+
+        $('#toggle-heatmap').prop('checked', true);
+        $('#toggle-healthy').prop('checked', true);
+        $('#toggle-unhealthy').prop('checked', true);
+
+        $('#toggle-heatmap').click(toggleHeatmap())
+
+        $('#toggle-healthy').click(function() {
+            for (var i = 0; i < healthyFoodData.length; i++) {
+                var thisMap = healthyFoodData[i].get('map');
+                thisMap = thisMap ? null : map
+                healthyFoodData[i].setMap(thisMap);
+            }
+        })
+
+        $('#toggle-unhealthy').click(function() {
+            for (var i = 0; i < unhealthyFoodData.length; i++) {
+                var thisMap = unhealthyFoodData[i].get('map');
+                thisMap = thisMap ? null : map
+                unhealthyFoodData[i].setMap(thisMap);
+            }
+        })
     });
 
     $('body.analyses.new').ready(function () {
