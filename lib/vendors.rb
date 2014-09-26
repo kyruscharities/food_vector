@@ -1,23 +1,26 @@
 require 'rest_client'
 require 'json'
+require 'cgi'
 
 API_KEY = 'AIzaSyCv1Lh2rQQI0QTLXNQS_DZJFbzrRX_EH2s'
 
 module Vendors
-  def get_vendors(lat, long, radius, healthy, keyword='')
-    if radius > 50000
-      puts "Radius #{radius} is larger than 50000 meter limit. Truncating..."
-      radius = 50000
+  def get_food_sources_by_region(analysis)
+    FoodSource.all.each do |fs|
+      Vendors.get_vendors(fs, analysis.geo_region)
     end
-
+  end
+  
+  def get_vendors(fs, geo, pagetok='')
     request_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" \
                   "key=#{API_KEY}" \
-                  "&location=#{lat},#{long}" \
-                  "&radius=#{radius}"\
-                  "&types=food"
-
-    if keyword
-      request_url = "#{request_url}&keyword=#{keyword}"
+                  "&location=#{geo.center_lat},#{geo.center_lon}" \
+                  "&types=food" \
+                  "&keyword=#{CGI.escape(fs.business_name)}" \
+                  "&rankby=distance"
+    
+    if pagetok
+      request_url = "#{request_url}&pagetoken=#{pagetok}"
     end
 
     puts "Attempting Requst to: #{request_url}"
@@ -26,32 +29,35 @@ module Vendors
       response = RestClient.get request_url
     rescue => e
       puts "ERROR: Unhandled Exception - #{e}"
-      return nil
     end
 
     if response.code == 200
       data = JSON.parse(response.to_str)
-      vendors = Array.new
-
-      for location in data['results']
+      
+      for loc in data['results']
         puts "Located Food Source: #{location}"
-        x = LocatedFoodSource.new business_name: location['name'],
-                                  lat: location['geometry']['location']['lat'],
-                                  lon: location['geometry']['location']['lng'],
-                                  healthy: healthy,
-                                  price_rank: location['price_level']
-        vendors << x
+        
+        loc_lat = loc['geometry']['location']['lat']
+        loc_lon = loc['geometry']['location']['lng']
+        
+        if loc_lat > geo.nw_lat or loc_lat < geo.se_lat
+          return
+        elsif loc_lon < geo.nw_lon or loc_lon > geo.se_lon
+          return
+        end
+
+        LocatedFoodSource.create! lat: loc_lat,
+                                  lon: loc_lon,
+                                  price_rank: loc['price_level'],
+                                  food_source_id: fs.id
       end
-
-      puts "Found #{vendors.length} Food Sources"
-      return vendors
-
     else
       puts "ERROR: Request returned code - #{response.code}"
     end
-
-    return nil
+    
+    Vendors.get_vendors(fs, geo, pagetok=data['next_page_token']) 
   end
-
+  
+  module_function :get_food_sources_by_region
   module_function :get_vendors
 end
