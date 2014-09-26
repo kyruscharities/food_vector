@@ -2,11 +2,11 @@
 = javascript_tag do
   var geo_region = #{raw resource.geo_region.to_json}
   var region_data = #{raw resource.analysis_geo_region_scores.to_json}
-  var food_data = #{raw resource.located_food_sources.to_json}
+  var food_data = #{raw resource.food_sources_near_the_region.to_json}
 
 
 %section
-  .col-xs-10
+  .col-xs-9
     %h2.page-header
       = resource.name
       %span.pull-right
@@ -19,8 +19,8 @@
 
     - if resource.analysis_complete?
 
-      %div{style: 'width: 100%; position: relative'}
-        #map{style: 'width: 100%; height: 400px;'}
+      %div{style: 'width: 100%;'}
+        #map{style: 'width: 100%; height: 800px;'}
         #map-controls
           %label
             = check_box_tag "toggle-heatmap", 1, true
@@ -58,8 +58,11 @@
                 RISK
                 %code= region.risk_score
               = geo_region_coords region.geo_region
+              %span
+                POVERTY RATE
+                %code= region.geo_region.income_data['poverty_rate']
 
-  .col-xs-2
+  .col-xs-3
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}
       - if resource.analysis_complete?
         %i.fa.fa-4x.fa-check
@@ -76,4 +79,6 @@
           regions
 
       %p
-        = link_to 'Re-analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?
+        = link_to 'Locate Food Sources', locate_food_sources_analysis_path(resource), method: :post, class: 'btn btn-default' #if resource.analysis_complete?
+      %p
+        = link_to 'Analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?

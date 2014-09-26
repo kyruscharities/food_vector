@@ -32,7 +32,8 @@ $(document).ready(function () {
             data: regionData,
             dissipating: false,
 //        maxIntensity: 1000,
-            radius: 0.006
+            radius: 0.0035
+//            radius: 300
         });
 
         heatmap.setMap(map);

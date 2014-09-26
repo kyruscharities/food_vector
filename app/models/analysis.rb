@@ -27,21 +27,26 @@ class Analysis < ActiveRecord::Base
     located_food_sources.includes(:food_source).where(food_source: {healthy: false})
   end
 
+  def food_sources_near_the_region
+    nw_lat = geo_region.nw_lat + 0.1
+    nw_lon = geo_region.nw_lon - 0.1
+    se_lat = geo_region.se_lat - 0.1
+    se_lon = geo_region.se_lon + 0.1
+
+    LocatedFoodSource.where('lat < :nw_lat AND lat > :se_lat AND lon > :nw_lon AND lon < :se_lon', {nw_lat: nw_lat, nw_lon: nw_lon, se_lat: se_lat, se_lon: se_lon})
+  end
+
   def clear_analysis_results!
     analysis_geo_region_scores.delete_all
     located_food_sources.delete_all
   end
 
   def analyze!
-    clear_analysis_results!
+    AnalysisWorker::AnalysisGenerateRiskScores.perform_async(self.id)
+  end
 
-    # identify and store all the regions
-    GeoRegionSplitter.split(geo_region).each { |r| analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: r, analysis: self) }
-
-    raise 'No suitable geographic regions found to analyze' if analysis_geo_region_scores.empty?
-
-    # calculate all the risk scores
-    analysis_geo_region_scores.each { |r| r.ensure_income_data }
+  def locate_food_sources!
+    AnalysisWorker::LocateFoodSourcesForGeoRegion.perform_async(self.id)
   end
 
   def analysis_complete?
