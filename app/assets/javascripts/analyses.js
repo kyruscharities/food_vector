@@ -47,6 +47,9 @@ $(document).ready(function () {
                 map: map,
                 title: food_data[i].food_source.business_name
             });
+
+            attachTitle(newMarker, food_data[i])
+
             console.log(food_data[i])
             if (food_data[i].food_source.healthy) {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
@@ -55,6 +58,16 @@ $(document).ready(function () {
                 newMarker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
                 unheathlyFoodData.push(newMarker);
             }
+        }
+
+        function attachTitle(marker, located_food_source) {
+            var infowindow = new google.maps.InfoWindow({
+                content: located_food_source.food_source.business_name
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(marker.get('map'), marker);
+            });
         }
     });
 
