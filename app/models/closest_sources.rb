@@ -9,46 +9,47 @@ class ClosestSources
     return nearest_sources(gr)
   end
 
-  def initialize()
+  def fake_data
     # Put in fake sources, since we don't have any to work with yet
-
     @healthy_sources = []
     @unhealthy_sources = []
     for lat in (-10...10)
       for lon in (-10...10)
-        @healthy_sources.push(LocatedFoodSource.new())
-        @unhealthy_sources.push(LocatedFoodSource.new())
+        lfs = LocatedFoodSource.new()
+        lfs.lat = 38.9601405+lat
+        lfs.lon = -77.3921701+lon
+        @healthy_sources.push(lfs)
+        lfs = LocatedFoodSource.new()
+        lfs.lat = 38.9601405+0.3*lat
+        lfs.lon = -77.3921701+0.3*lon
+        @unhealthy_sources.push(lfs)
       end
     end
+  end
 
-    # Create fake locations for these sources
+  def initialize
+
+    fake_data()
+
+    # Index the located food sources for use with Kdtree
     @healthy_sources_indexed = []
-    i = 0
-    for source in @healthy_sources
-      @healthy_sources_indexed.push([38.9601405+lat, -77.3921701+lon, i])
-      i += 1
-    end
+    @healthy_sources.each_with_index { |lfs, i|
+      @healthy_sources_indexed.push([lfs.lat, lfs.lon, i])
+    }
 
     @unhealthy_sources_indexed = []
-    i = 0
-    for source in @unhealthy_sources
-      @unhealthy_sources_indexed.push([38.9601405+0.1*lat, -77.3921701+0.1*lon, i])
-      i += 1
-    end
+    @unhealthy_sources.each_with_index { |lfs, i|
+      @unhealthy_sources_indexed.push([lfs.lat, lfs.lon, i])
+    }
 
     # Create Kdtrees from the sources
     @healthy_tree = Kdtree.new(@healthy_sources_indexed)
     @unhealthy_tree = Kdtree.new(@unhealthy_sources_indexed)
   end
 
-  def walking_distance_to_located_food_source(geo_region, located_food_source)
-    # Fill this in with a call to Google Maps API?
-  end
-
   def nearest_source_helper(geo_region, tree, sources)
-    lat = geo_region.nw_lat/2 + geo_region.se_lat/2
-    lon = geo_region.nw_lon/2 + geo_region.se_lon/2
-    index = tree.nearest(lat, lon)
+    geo_region.calculate_center_point()
+    index = tree.nearest(geo_region.center_lat, geo_region.center_lon)
     return sources[index]
   end
 
