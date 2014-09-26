@@ -74,6 +74,7 @@ $(document).ready(function () {
                 zIndex: 1
             }
         });
+        drawingManager.setDrawingMode(google.maps.drawing.OverlayType.RECTANGLE)
         drawingManager.setMap(map);
 
         google.maps.event.addListener(drawingManager, 'rectanglecomplete', function(rectangle) {
