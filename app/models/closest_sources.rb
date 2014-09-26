@@ -1,4 +1,5 @@
 class ClosestSources
+=begin
   def test
     gr = GeoRegion.new
     gr.nw_lat=38.9601405+0.1
@@ -26,10 +27,12 @@ class ClosestSources
       end
     end
   end
+=end
 
-  def initialize
+  def initialize(healthy_sources_in, unhealthy_source_in)
 
-    fake_data()
+    @healthy_sources = healthy_sources_in
+    @unhealthy_sources = unhealthy_source_in
 
     # Index the located food sources for use with Kdtree
     @healthy_sources_indexed = []
