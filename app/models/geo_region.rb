@@ -36,6 +36,10 @@ class GeoRegion < ActiveRecord::Base
     }
   end
 
+  def center_point_as_array
+    return [self.center_lat, self.center_lon]
+  end
+
   def nw
     [nw_lat, nw_lon]
   end
