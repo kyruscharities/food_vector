@@ -4,6 +4,28 @@
 
 $(document).ready(function () {
     $('body.analyses.show').ready(function () {
+        var analysis_id = $('#map').attr('data-analysis-id');
+        $.getJSON('/analyses/' + analysis_id + '/analysis_geo_region_scores.json', function(region_data) {
+            var regionData = [];
+            for (var i = 0; i < region_data.length; i++) {
+                regionData.push({
+                    location: new google.maps.LatLng(region_data[i].geo_region.center_lat,
+                        region_data[i].geo_region.center_lon),
+                    weight: parseInt(region_data[i].risk_score)
+                });
+            }
+
+            heatmap = new google.maps.visualization.HeatmapLayer({
+                data: regionData,
+                dissipating: false,
+//        maxIntensity: 1000,
+                radius: 0.003
+//            radius: 300
+            });
+
+            heatmap.setMap(map);
+        });
+
         console.log("loading show stuff");
         var handler, map;
 
@@ -18,25 +40,6 @@ $(document).ready(function () {
 
         map = new google.maps.Map(document.getElementById('map'),
             mapOptions);
-
-        var regionData = [];
-        for (var i = 0; i < region_data.length; i++) {
-            regionData.push({
-                location: new google.maps.LatLng(region_data[i].geo_region.center_lat,
-                    region_data[i].geo_region.center_lon),
-                weight: parseInt(region_data[i].risk_score)
-            });
-        }
-
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: regionData,
-            dissipating: false,
-//        maxIntensity: 1000,
-            radius: 0.003
-//            radius: 300
-        });
-
-        heatmap.setMap(map);
 
         // get get lat lon and scale out a bit to auto zoom to our data
         var bounds = new google.maps.LatLngBounds();

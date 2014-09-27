@@ -1,7 +1,7 @@
 -#- content_for :head do
 = javascript_tag do
   var geo_region = #{raw resource.geo_region.to_json}
-  var region_data = #{raw resource.analysis_geo_region_scores.to_json}
+  -#var region_data = #{raw resource.analysis_geo_region_scores.to_json}
   var food_data = #{raw resource.food_sources_near_the_region.to_json}
 
 
@@ -20,7 +20,7 @@
     - if resource.analysis_complete?
 
       %div{style: 'width: 100%; position: relative'}
-        #map{style: 'width: 100%; height: 800px;'}
+        #map{style: 'width: 100%; height: 800px;', 'data-analysis-id' => resource.id}
         #map-controls
           %label
             = check_box_tag "toggle-heatmap", 1, true
@@ -49,19 +49,19 @@
       -#  - else
       -#    = resource.located_unhealthy_food_sources.count
 
-      %h3.page-header Analysis Details
-      %ul
-        - resource.analysis_geo_region_scores.each do |region|
-          %li
-            %p
-              %span{style: 'display: inline-block;min-width: 100px'}
-                RISK
-                %code= region.risk_score
-              = geo_region_coords region.geo_region
-              - if region.geo_region.income_data
-                %span
-                  POVERTY RATE
-                  %code= region.geo_region.income_data['poverty_rate']
+      -#%h3.page-header Analysis Details
+      -#%ul
+      -#  - resource.analysis_geo_region_scores.each do |region|
+      -#    %li
+      -#      %p
+      -#        %span{style: 'display: inline-block;min-width: 100px'}
+      -#          RISK
+      -#          %code= region.risk_score
+      -#        = geo_region_coords region.geo_region
+      -#        - if region.geo_region.income_data
+      -#          %span
+      -#            POVERTY RATE
+      -#            %code= region.geo_region.income_data['poverty_rate']
 
   .col-xs-3
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}

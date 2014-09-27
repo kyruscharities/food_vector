@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     member do
       post :analyze
       post :locate_food_sources
+      get :analysis_geo_region_scores
     end
   end
 

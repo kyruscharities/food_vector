@@ -15,6 +15,10 @@ class AnalysesController < ApplicationController
     redirect_to analysis_path(resource)
   end
 
+  def analysis_geo_region_scores
+    render json: resource.analysis_geo_region_scores.to_json
+  end
+
   private
   def analysis_params
     params.require(:analysis).permit(:name, :description, :user_id, :geo_region_id, :analysis_result_id,
