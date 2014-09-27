@@ -70,11 +70,13 @@ $(document).ready(function () {
                         weight: parseInt(region_data[i].risk_score)
                     });
 
-                    heatmap.setData(regionData)
+
                 }
 
-                if(region_data.length === 200) {
+                if(region_data.length === 1000) {
                     getResults(page_number + 1, heatmap, regionData);
+                } else {
+                    heatmap.setData(regionData)
                 }
             });
         }

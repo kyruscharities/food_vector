@@ -16,7 +16,7 @@ class AnalysesController < ApplicationController
   end
 
   def analysis_geo_region_scores
-    @analysis_geo_region_scores = resource.analysis_geo_region_scores.where.not(risk_score: nil).paginate(page: params[:page], per_page: 200)
+    @analysis_geo_region_scores = resource.analysis_geo_region_scores.where.not(risk_score: nil).paginate(page: params[:page], per_page: 1000)
     render json: @analysis_geo_region_scores.to_json
   end
 
