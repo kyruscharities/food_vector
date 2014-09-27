@@ -73,7 +73,7 @@ $(document).ready(function () {
                     heatmap.setData(regionData)
                 }
 
-                if(region_data.length === 1000) {
+                if(region_data.length === 200) {
                     getResults(page_number + 1, heatmap, regionData);
                 }
             });
