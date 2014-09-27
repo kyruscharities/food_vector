@@ -15,7 +15,9 @@ module GeoRegionSplitter
                     nw_lon: long,
                     se_lat: lat + INCREMENT,
                     se_lon: long + INCREMENT
-      analysis.analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: gr, analysis: analysis)
+      agrs = AnalysisGeoRegionScore.create!(geo_region: gr, analysis: analysis)
+      analysis.analysis_geo_region_scores.append agrs
+      agrs.ensure_income_data
     end
     nil
   end

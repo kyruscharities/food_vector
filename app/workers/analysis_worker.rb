@@ -62,7 +62,7 @@ module AnalysisWorker
       GeoRegionSplitter.split(analysis) #.each { |r| analysis.analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: GeoRegion.find(r), analysis: analysis) }
 
       # get income data and calculate all the risk scores
-      analysis.analysis_geo_region_scores.each { |r| r.ensure_income_data }
+      # analysis.analysis_geo_region_scores.each { |r| r.ensure_income_data }
     end
   end
 
