@@ -37,7 +37,6 @@ class ClosestSources
 
     # Index the located food sources for use with Kdtree
     @healthy_sources_indexed = []
-    puts "number of healthy sources: #{@healthy_sources}"
     @healthy_sources.each_with_index { |lfs, i|
       @healthy_sources_indexed.push([lfs.lat, lfs.lon, i])
     }
