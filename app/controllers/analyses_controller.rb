@@ -16,7 +16,8 @@ class AnalysesController < ApplicationController
   end
 
   def analysis_geo_region_scores
-    render json: resource.analysis_geo_region_scores.to_json
+    @analysis_geo_region_scores = resource.analysis_geo_region_scores.paginate(page: params[:page], per_page: 100)
+    render json: @analysis_geo_region_scores.to_json
   end
 
   private
