@@ -42,7 +42,7 @@ module AnalysisWorker
       unless geo_region.income_data
         income_data = {
             'poverty_level' => Census.getIncomeForCoordinate(geo_region.center_lat, geo_region.center_lon),
-            'income_tiers' => Census.get_households_by_income_tier(geo_region.center_lat, geo_region.center_lon)
+            # 'income_tiers' => Census.get_households_by_income_tier(geo_region.center_lat, geo_region.center_lon)
         }
         geo_region.update! income_data: income_data, census_tract_id: income_data[:identifier]
       end
