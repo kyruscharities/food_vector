@@ -17,5 +17,6 @@ module GeoRegionSplitter
                     se_lon: long + INCREMENT
       analysis.analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: gr, analysis: analysis)
     end
+    nil
   end
 end
