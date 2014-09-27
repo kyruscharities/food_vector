@@ -51,11 +51,11 @@ class Analysis < ActiveRecord::Base
 
   def analysis_complete?
     # analysis is complete when all blocks have a risk score
-    analysis_geo_region_scores.unscoped.where.not(risk_score: nil).count > 0
+    analysis_geo_region_scores.where.not(risk_score: nil).count > 0
   end
 
   def analysis_progress
-    "#{analysis_geo_region_scores.unscoped.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.unscoped.count}"
+    "#{analysis_geo_region_scores.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.count}"
   end
 
   def init

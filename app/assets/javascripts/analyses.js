@@ -25,7 +25,6 @@ $(document).ready(function () {
                 });
 
                 heatmap.setData(regionData)
-                heatmap.setMap( map );
             }
 
 
