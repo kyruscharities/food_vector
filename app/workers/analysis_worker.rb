@@ -59,10 +59,28 @@ module AnalysisWorker
       analysis.clear_analysis_results!
 
       # identify and store all the regions
-      GeoRegionSplitter.split(analysis) #.each { |r| analysis.analysis_geo_region_scores.append AnalysisGeoRegionScore.create!(geo_region: GeoRegion.find(r), analysis: analysis) }
+      GeoRegionSplitter.split(analysis)
+    end
+  end
 
-      # get income data and calculate all the risk scores
-      # analysis.analysis_geo_region_scores.each { |r| r.ensure_income_data }
+  class SplitRegionAndStartAnalysis
+    include Sidekiq::Worker
+
+    def perform(analysis_id, se_lat, nw_lat, nw_lon, se_lon, increment)
+      analysis = Analysis.find analysis_id
+      
+      longs = Range.new(nw_lon, se_lon, false).step(increment).to_a
+
+      longs.each do |long|
+        gr = GeoRegion.find_or_create_by! nw_lat: se_lat + increment,
+                                          nw_lon: long,
+                                          se_lat: se_lat,
+                                          se_lon: long + increment
+        agrs = AnalysisGeoRegionScore.create!(geo_region: gr, analysis: analysis)
+        analysis.analysis_geo_region_scores.append agrs
+        agrs.ensure_income_data
+      end
+      nil
     end
   end
 
