@@ -58,9 +58,10 @@
                 RISK
                 %code= region.risk_score
               = geo_region_coords region.geo_region
-              %span
-                POVERTY RATE
-                %code= region.geo_region.income_data['poverty_rate']
+              - if region.geo_region.income_data
+                %span
+                  POVERTY RATE
+                  %code= region.geo_region.income_data['poverty_rate']
 
   .col-xs-3
     .alert.alert-info.text-center{style: 'margin-top: 45px;'}
