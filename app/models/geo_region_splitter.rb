@@ -10,7 +10,7 @@ module GeoRegionSplitter
     .map { |x| x.to_f.round(2) }
 
     nw_lat, nw_lon, se_lat, se_lon = rounded
-    lats = Range.new(se_lat, nw_lat, false).step(INCREMENT).to_a.each do |lat|
+    lats = Range.new(se_lat, nw_lat, false).step(self.increment).to_a.each do |lat|
       AnalysisWorker::SplitRegionAndStartAnalysis.perform_async(analysis.id, lat, lat + self.increment, nw_lon, se_lon, self.increment)
     end
   end
