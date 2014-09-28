@@ -40,4 +40,8 @@ class GeoRegion < ActiveRecord::Base
   def se
     [se_lat, se_lon]
   end
+
+  def number_of_points
+    (((nw_lat.round(2) - se_lat.round(2)) / GeoRegionSplitter.increment) * ((nw_lon.round(2) - se_lon.round(2)) / GeoRegionSplitter.increment)).abs
+  end
 end

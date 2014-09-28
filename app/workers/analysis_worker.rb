@@ -68,7 +68,7 @@ module AnalysisWorker
 
     def perform(analysis_id, se_lat, nw_lat, nw_lon, se_lon, increment)
       analysis = Analysis.find analysis_id
-      
+
       longs = Range.new(nw_lon, se_lon, false).step(increment).to_a
 
       longs.each do |long|

@@ -11,6 +11,8 @@ class Analysis < ActiveRecord::Base
   validates_presence_of :geo_region
   accepts_nested_attributes_for :geo_region, allow_destroy: true
 
+  validate :geo_region_is_small_enough
+
   has_many :analysis_geo_region_scores
   has_many :geo_regions, through: :analysis_geo_region_scores
 
@@ -64,5 +66,9 @@ class Analysis < ActiveRecord::Base
 
   def as_json(options={})
     super(options.merge({include: :geo_region}))
+  end
+
+  def geo_region_is_small_enough
+    errors.add(:name, 'select a smaller region, the current selection will create too many data points to display effectively') unless geo_region && geo_region.number_of_points <= 10000
   end
 end

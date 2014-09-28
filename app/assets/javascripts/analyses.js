@@ -113,7 +113,7 @@ $(document).ready(function () {
         }
     });
 
-    $('body.analyses.new').ready(function () {
+    $('body.analyses.new, body.analyses.create').ready(function () {
         console.log("loading new stuff");
         var handler, map;
         var drawn_rectangle;
