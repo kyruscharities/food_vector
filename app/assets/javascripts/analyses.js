@@ -7,12 +7,26 @@ $(document).ready(function () {
 
         var analysis_id = $('#map').attr('data-analysis-id');
         var regionData = [];
+
+        var single_hue_gradient = [
+            'rgb(252,251,253)',
+            'rgb(239,237,245)',
+            'rgb(218,218,235)',
+            'rgb(188,189,220)',
+            'rgb(158,154,200)',
+            'rgb(128,125,186)',
+            'rgb(106,81,163 )',
+            'rgb(84,39,143  )',
+        ];
+        
         var heatmap = new google.maps.visualization.HeatmapLayer({
             data: regionData,
             dissipating: false,
 //        maxIntensity: 1000,
-            radius: 0.003
-//            radius: 300
+            radius: 0.003,
+//            radius: 300,
+            gradient: single_hue_gradient,
+            opacity: 0.7
         });
 
         var handler, map;
