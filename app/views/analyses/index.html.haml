@@ -1,28 +1,24 @@
 = javascript_tag do
-  var analyses_data = #{raw collection.to_json}
+  -# so we can show the correct maps
+  var analysis_id_to_geo_region = #{raw Hash[collection.collect {|a| [a.id, a.geo_region]}].to_json}
 
 %section
-  .col-md-12
-    -#.start-new
-    -#  %h2= link_to 'start a new food desert analysis', new_resource_path
+  .analysis-block
+    -# this next line makes a fake h2 so it's like all the other blocks
+    -# because I'm not smart enough to always make this sizing right
+    %h3 &nbsp;
+    .start-new{onclick: "window.location.href = '#{new_resource_path}'"}
+      = link_to new_resource_path do
+        %i.plus.fa.fa-plus
+        start a new food desert analysis
 
-    .row
-      .analysis-block
-        -# this next line makes a fake h2 so it's like all the other blocks
-        -# because I'm not smart enough to always make this sizing right
-        %h3 &nbsp;
-        .start-new{onclick: "window.location.href = '#{new_resource_path}'"}
-          = link_to new_resource_path do
-            %i.plus.fa.fa-plus
-            start a new food desert analysis
+  - collection.order(:updated_at).each do |resource|
+    .analysis-block
+      %h3
+        = link_to resource.name, resource
+        %span.pull-right
+          = link_to resource, method: :delete, data: { confirm: 'Are you sure?' }, class: 'delete-icon' do
+            %i.fa.fa-trash
 
-      - collection.order(:updated_at).each do |resource|
-        .analysis-block
-          %h3
-            = link_to resource.name, resource
-            %span.pull-right
-              = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
-                %i.fa.fa-trash
-
-          = link_to resource do
-            .map-static-image{id: "map-image-#{resource.id}"}
+      = link_to resource do
+        .map-static-image{id: "map-image-#{resource.id}"}

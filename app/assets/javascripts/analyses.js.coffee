@@ -2,15 +2,15 @@ $(document).ready ->
 
   $("body.analyses.index").ready ->
     src = "http://maps.google.com/maps/api/staticmap?size=512x400&visible="
-    i = 0
 
-    while i < analyses_data.length
-      analysis = analyses_data[i]
-      bounds = new google.maps.LatLngBounds(new google.maps.LatLng(analysis.geo_region.se_lat, analysis.geo_region.nw_lon), new google.maps.LatLng(analysis.geo_region.nw_lat, analysis.geo_region.se_lon))
+    for id, geo_region of analysis_id_to_geo_region
+      bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(geo_region.se_lat, geo_region.nw_lon),
+        new google.maps.LatLng(geo_region.nw_lat, geo_region.se_lon))
+
       img = $("<img class=\"static-map\">")
       img.attr "src", src + bounds.getSouthWest().toUrlValue() + "|" + bounds.getNorthEast().toUrlValue()
-      $("#map-image-" + analysis.id).html img
-      i++
+      $("#map-image-" + id).html img
 
   $("body.analyses.new, body.analyses.edit, body.analyses.create").ready ->
     mapOptions =

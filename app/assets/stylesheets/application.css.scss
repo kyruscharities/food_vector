@@ -59,3 +59,16 @@ form .form-group label.checkbox {
     max-width: none;
   }
 }
+
+.edit-icon, .delete-icon {
+  color: #ccc;
+  font-size: .9em;
+}
+
+.delete-icon:hover {
+  @extend .text-danger;
+}
+
+.edit-icon:hover {
+  @extend .text-info;
+}
