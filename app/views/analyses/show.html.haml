@@ -16,7 +16,10 @@
             = link_to edit_resource_path, class: 'btn btn-xs btn-info' do
               %i.fa.fa-pencil
 
-        %p.lead= resource.description
+        - if resource.description.present?
+          %p
+            %em= resource.description
+          %hr
 
         = render 'layouts/messages'
 
@@ -24,7 +27,7 @@
           There are #{resource.located_food_sources.count} food sources
           located in the analysis region.
 
-          = link_to 'Refresh the location of food sources in the region.', locate_food_sources_analysis_path(resource), method: :post
+          = link_to 'Refresh the locations of food sources in the region.', locate_food_sources_analysis_path(resource), method: :post
 
         %hr
 
