@@ -8,7 +8,11 @@
         %span.icon-bar
         %span.icon-bar
 
-      = link_to 'FOOD VECTOR', root_path, class: 'navbar-brand'
+      .navbar-brand
+        %a{href: root_path} FOOD VECTOR
+        .sub
+          by the
+          %a{href: 'http://foodrescuealliance.org', target: :_blank} food rescue alliance
 
     .collapse.navbar-collapse
       %ul.nav.navbar-nav
@@ -18,9 +22,10 @@
 
       %ul.nav.navbar-nav.pull-right
         - if user_signed_in?
-          %li= link_to current_user.email, edit_user_registration_path
           %li
-            = link_to destroy_user_session_path, :method=>'delete' do
+            = link_to current_user.email, edit_user_registration_path
+          %li
+            = link_to destroy_user_session_path, method: 'delete', class: 'no-padding' do
               %i.fa.fa-sign-out
 
         - else

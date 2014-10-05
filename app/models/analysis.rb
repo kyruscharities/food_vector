@@ -1,6 +1,7 @@
 class Analysis < ActiveRecord::Base
 
   after_initialize :init
+  after_update :clear_analysis_after_region_change
 
   validates_presence_of :name
 
@@ -51,11 +52,6 @@ class Analysis < ActiveRecord::Base
     AnalysisWorker::LocateFoodSourcesForGeoRegion.perform_async(self.id)
   end
 
-  def analysis_complete?
-    # analysis is complete when all blocks have a risk score
-    analysis_geo_region_scores.where.not(risk_score: nil).count > 0
-  end
-
   def analysis_progress
     "#{analysis_geo_region_scores.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.count}"
   end
@@ -64,11 +60,15 @@ class Analysis < ActiveRecord::Base
     build_geo_region unless geo_region
   end
 
+  def clear_analysis_after_region_change
+    clear_analysis_results! unless name_changed? or description_changed?
+  end
+
   def as_json(options={})
     super(options.merge({include: :geo_region}))
   end
 
   def geo_region_is_small_enough
-    errors.add(:name, 'select a smaller region, the current selection will create too many data points to display effectively') unless geo_region && geo_region.number_of_points <= 10000
+    errors.add(:name, 'select a smaller region, the current selection will create too many data points to display effectively') unless geo_region && geo_region.valid? && geo_region.number_of_points <= 10000
   end
 end

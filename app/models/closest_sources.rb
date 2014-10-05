@@ -88,8 +88,8 @@ class ClosestSources
 
   def miles_to_nearest_sources(geo_region)
     (nearest_healthy, nearest_unhealthy) = nearest_sources(geo_region)
-    miles_to_healthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_healthy.as_array, :units => :mi)
-    miles_to_unhealthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_unhealthy.as_array, :units => :mi)
+    miles_to_healthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_healthy.try(:as_array), :units => :mi)
+    miles_to_unhealthy = Geocoder::Calculations.distance_between(geo_region.center_point_as_array, nearest_unhealthy.try(:as_array), :units => :mi)
     return [miles_to_healthy, miles_to_unhealthy]
   end
 

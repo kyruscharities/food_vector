@@ -25,8 +25,8 @@ class GeoRegion < ActiveRecord::Base
   serialize :income_data, JSON
 
   def calculate_center_point
-    self.center_lat = nw_lat / 2 + se_lat / 2
-    self.center_lon = nw_lon / 2 + se_lon / 2
+    self.center_lat = nw_lat / 2 + se_lat / 2 if nw_lat? and se_lat?
+    self.center_lon = nw_lon / 2 + se_lon / 2 if nw_lon? and se_lon?
   end
 
   def center_point_as_array

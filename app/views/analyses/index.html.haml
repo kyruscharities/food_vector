@@ -3,27 +3,26 @@
 
 %section
   .col-md-12
-    %h1.page-header
-      Recent analyses
-      %span.pull-right
-        = link_to 'Start new analysis', new_resource_path, class: 'btn btn-primary'
+    -#.start-new
+    -#  %h2= link_to 'start a new food desert analysis', new_resource_path
 
-    - if collection.empty?
-      .alert.alert-info
-        You haven't run any analyses yet.
-        = link_to 'Start a new analysis.', new_resource_path
+    .row
+      .analysis-block
+        -# this next line makes a fake h2 so it's like all the other blocks
+        -# because I'm not smart enough to always make this sizing right
+        %h3 &nbsp;
+        .start-new{onclick: "window.location.href = '#{new_resource_path}'"}
+          = link_to new_resource_path do
+            %i.plus.fa.fa-plus
+            start a new food desert analysis
 
-    - else
-      .row
-        - collection.order(:updated_at).each do |resource|
-          .col-xs-12.col-sm-6
-            %h2
-              = link_to resource.name, resource
-              %span.pull-right
-                = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
-                  %i.fa.fa-trash
+      - collection.order(:updated_at).each do |resource|
+        .analysis-block
+          %h3
+            = link_to resource.name, resource
+            %span.pull-right
+              = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
+                %i.fa.fa-trash
 
-            = link_to resource do
-              .map-static-image{id: "map-image-#{resource.id}"}
-
-            %hr
+          = link_to resource do
+            .map-static-image{id: "map-image-#{resource.id}"}
