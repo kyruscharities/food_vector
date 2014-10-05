@@ -3,10 +3,10 @@
     %h3.page-header
       %strong.text-success Healthy
       food sources
-    = render 'food_source_list', collection: collection.where(healthy: true)
+    = render 'food_source_list', collection: collection.where(healthy: true), is_healthy: true
 
   .col-xs-12.col-sm-6.col-md-5.col-md-offset-1
     %h3.page-header
       %strong.text-danger Unhealthy
       food sources
-    = render 'food_source_list', collection: collection.where(healthy: false)
+    = render 'food_source_list', collection: collection.where(healthy: false), is_healthy: false

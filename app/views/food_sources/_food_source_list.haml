@@ -3,7 +3,7 @@
     = simple_form_for :food_source do |f|
       .input-group
         = f.input_field :business_name, placeholder: 'Ex: Safeway'
-        = f.input :healthy, as: :hidden, input_html: { value: true }
+        = f.input :healthy, as: :hidden, input_html: { value: is_healthy }
         %span.input-group-btn
           = f.button :submit, 'add new food source'
 
