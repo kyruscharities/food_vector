@@ -97,10 +97,13 @@ $(document).ready ->
 
     analysis_id = $("#map").attr("data-analysis-id")
     regionData = []
+    single_hue_gradient = ['rgb(255,245,240)','rgb(254,224,210)','rgb(252,187,161)','rgb(252,146,114)','rgb(251,106,74)','rgb(239,59,44)','rgb(203,24,29)','rgb(153,0,13)']
+
     heatmap = new google.maps.visualization.HeatmapLayer(
       data: regionData
       dissipating: false
-      radius: 0.003
+      radius: 0.003,
+      gradient: single_hue_gradient
     )
     handler = undefined
     map = undefined
