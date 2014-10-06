@@ -12,7 +12,7 @@
         %i.plus.fa.fa-plus
         start a new food desert analysis
 
-  - collection.order(:updated_at).each do |resource|
+  - collection.order('updated_at desc').each do |resource|
     .analysis-block
       %h3
         = link_to resource.name, resource
