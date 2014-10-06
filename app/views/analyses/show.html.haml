@@ -24,10 +24,10 @@
         = render 'layouts/messages'
 
         %p
-          There are #{resource.located_food_sources.count} food sources
-          located in the analysis region.
+          There are #{resource.food_sources_near_the_region.count} food sources
+          located near the analysis region.
 
-          = link_to 'Refresh the locations of food sources in the region.', locate_food_sources_analysis_path(resource), method: :post
+          = link_to 'Refresh the locations of food sources.', locate_food_sources_analysis_path(resource), method: :post
 
         %hr
 

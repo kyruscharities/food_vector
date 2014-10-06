@@ -9,7 +9,7 @@
         %span.icon-bar
 
       .navbar-brand
-        %a{href: root_path} FOOD VECTOR
+        %a{href: user_signed_in? ? analyses_path : root_path } FOOD VECTOR
         .sub
           by the
           %a{href: 'http://foodrescuealliance.org', target: :_blank} food rescue alliance

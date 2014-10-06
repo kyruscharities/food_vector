@@ -20,8 +20,6 @@ class Analysis < ActiveRecord::Base
   delegate :nw, to: :geo_region
   delegate :se, to: :geo_region
 
-  has_many :located_food_sources
-
   def located_healthy_food_sources
     located_food_sources.includes(:food_source).where(food_source: {healthy: true})
   end
