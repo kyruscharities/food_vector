@@ -20,14 +20,6 @@ class Analysis < ActiveRecord::Base
   delegate :nw, to: :geo_region
   delegate :se, to: :geo_region
 
-  def located_healthy_food_sources
-    located_food_sources.includes(:food_source).where(food_source: {healthy: true})
-  end
-
-  def located_unhealthy_food_sources
-    located_food_sources.includes(:food_source).where(food_source: {healthy: false})
-  end
-
   def food_sources_near_the_region
     nw_lat = geo_region.nw_lat + 0.1
     nw_lon = geo_region.nw_lon - 0.1
@@ -39,7 +31,6 @@ class Analysis < ActiveRecord::Base
 
   def clear_analysis_results!
     analysis_geo_region_scores.delete_all
-    located_food_sources.delete_all
   end
 
   def analyze!
@@ -50,8 +41,20 @@ class Analysis < ActiveRecord::Base
     AnalysisWorker::LocateFoodSourcesForGeoRegion.perform_async(self.id)
   end
 
-  def analysis_progress
-    "#{analysis_geo_region_scores.where.not(risk_score: nil).count} / #{analysis_geo_region_scores.count}"
+  def complete_analysis_subregions
+    analysis_geo_region_scores.where.not(risk_score: nil)
+  end
+
+  def incomplete_analysis_subregions
+    analysis_geo_region_scores.where(risk_score: nil)
+  end
+
+  def total_analysis_subregions
+    analysis_geo_region_scores.count
+  end
+
+  def analysis_complete?
+    total_analysis_subregions > 0 and incomplete_analysis_subregions.count == 0
   end
 
   def init
@@ -59,7 +62,10 @@ class Analysis < ActiveRecord::Base
   end
 
   def clear_analysis_after_region_change
-    clear_analysis_results! unless name_changed? or description_changed?
+    unless name_changed? or description_changed?
+      clear_analysis_results!
+      locate_food_sources!
+    end
   end
 
   def as_json(options={})

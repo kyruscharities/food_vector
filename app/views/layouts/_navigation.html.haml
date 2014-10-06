@@ -18,7 +18,8 @@
       %ul.nav.navbar-nav
         - if user_signed_in?
           %li= link_to 'Food Sources', food_sources_path
-          %li= link_to 'Geographic Data', geographic_data_points_path
+          -# TODO: Delete if we delete this model
+          -#%li= link_to 'Geographic Data', geographic_data_points_path
 
       %ul.nav.navbar-nav.pull-right
         - if user_signed_in?

@@ -32,8 +32,16 @@
         %hr
 
         %p
-          Analyzed #{resource.analysis_progress} regions
-          = link_to 'Analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?
+          - if resource.analysis_complete?
+            %i.fa.fa-check.fa-2x
+            Analysis of #{resource.total_analysis_subregions} sub-regions is complete.
+            = link_to 'Re-analyze the region.', analyze_analysis_path(resource), method: :post
+
+          - else
+            - if resource.total_analysis_subregions > 0
+              Analysis is complete for #{resource.complete_analysis_subregions.count} of the #{resource.total_analysis_subregions} sub-regions in the analysis area.
+
+            %p= link_to 'Begin analysis', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary'
 
         %hr
 
