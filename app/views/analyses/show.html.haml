@@ -4,82 +4,49 @@
   -#var region_data = #{raw resource.analysis_geo_region_scores.to_json}
   var food_data = #{raw resource.food_sources_near_the_region.to_json}
 
+#map-container
+  #map{'data-analysis-id' => resource.id}
 
-%section
-  .col-xs-9
-    %h2.page-header
-      = resource.name
-      %span.pull-right
+  #info.well
+    .row
+      .col-xs-12
+        %h4.page-header.no-margin
+          = resource.name
+          %span.pull-right
+            = link_to edit_resource_path, class: 'btn btn-xs btn-info' do
+              %i.fa.fa-pencil
 
-    %p.lead= resource.description
+        - if resource.description.present?
+          %p
+            %em= resource.description
+          %hr
 
-    %p
-      %b Region of interest:
-      = geo_region_coords resource
+        = render 'layouts/messages'
 
-    - if resource.analysis_complete?
+        %p
+          There are #{resource.food_sources_near_the_region.count} food sources
+          located near the analysis region.
 
-      %div{style: 'width: 100%; position: relative'}
-        #map{style: 'width: 100%; height: 800px;', 'data-analysis-id' => resource.id}
+          = link_to 'Refresh the locations of food sources.', locate_food_sources_analysis_path(resource), method: :post
+
+        %hr
+
+        %p
+          Analyzed #{resource.analysis_progress} regions
+          = link_to 'Analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?
+
+        %hr
+
         #map-controls
+          %h5 Show me
           %label
-            = check_box_tag "toggle-heatmap", 1, true
+            = check_box_tag 'toggle-heatmap', 1, true
             Food Desert Risk
 
           %label
-            = check_box_tag "toggle-healthy", 1, true
+            = check_box_tag 'toggle-healthy', 1, true
             Healthy Food Sources
 
           %label
-            = check_box_tag "toggle-unhealthy", 1, true
+            = check_box_tag 'toggle-unhealthy', 1, true
             Unhealthy Food Sources
-
-      %h3.page-header Located Food Sources
-      %p
-        %b Number of located food sources:
-        - if resource.located_food_sources.empty?
-          There are no food sources in this geo region!
-        - else
-          = resource.located_food_sources.count
-
-      -#%p
-      -#  %b Number of located unhealthy food sources:
-      -#  - if resource.located_unhealthy_food_sources.empty?
-      -#    There are no unhealthy food sources in this geo region.
-      -#  - else
-      -#    = resource.located_unhealthy_food_sources.count
-
-      -#%h3.page-header Analysis Details
-      -#%ul
-      -#  - resource.analysis_geo_region_scores.each do |region|
-      -#    %li
-      -#      %p
-      -#        %span{style: 'display: inline-block;min-width: 100px'}
-      -#          RISK
-      -#          %code= region.risk_score
-      -#        = geo_region_coords region.geo_region
-      -#        - if region.geo_region.income_data
-      -#          %span
-      -#            POVERTY RATE
-      -#            %code= region.geo_region.income_data['poverty_rate']
-
-  .col-xs-3
-    .alert.alert-info.text-center{style: 'margin-top: 45px;'}
-      - if resource.analysis_complete?
-        %i.fa.fa-4x.fa-check
-        %p
-          = resource.analysis_progress
-          regions analyzed
-
-      - else
-        %i.fa.fa-4x.fa-spinner.fa-spin
-        %p
-          Analyzing
-          %br
-          = resource.analysis_progress
-          regions
-
-      %p
-        = link_to 'Locate Food Sources', locate_food_sources_analysis_path(resource), method: :post, class: 'btn btn-default' #if resource.analysis_complete?
-      %p
-        = link_to 'Analyze', analyze_analysis_path(resource), method: :post, class: 'btn btn-primary' #if resource.analysis_complete?

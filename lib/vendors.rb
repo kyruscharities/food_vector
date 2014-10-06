@@ -2,18 +2,18 @@ require 'rest_client'
 require 'json'
 require 'cgi'
 
-API_KEY = ENV["GOOGLEMAPS_API_KEY"]
-
 module Vendors
   def get_food_sources_by_region(analysis)
+    Rails.logger.info "Finding locations of #{FoodSource.all.count} food sources"
     FoodSource.all.each do |fs|
+      Rails.logger.info "Finding all locations of [#{fs.business_name}] near [#{analysis.geo_region}]"
       Vendors.get_vendors(fs, analysis.geo_region)
     end
   end
   
   def get_vendors(fs, geo, pagetok='')
     request_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?" \
-                  "key=#{API_KEY}" \
+                  "key=#{ENV.fetch "GOOGLEMAPS_API_KEY"}" \
                   "&location=#{geo.center_lat},#{geo.center_lon}" \
                   "&types=food" \
                   "&name=#{CGI.escape(fs.business_name)}" \

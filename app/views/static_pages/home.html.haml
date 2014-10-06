@@ -1,6 +1,32 @@
-%section
-  .col-md-8
-    %h2.page-header OHHAI
+.container
+  .row
+    .col-xs-12.col-sm-10.col-sm-offset-1.col-md-8.col-md-offset-2
+      .callout
+        .row
+          .col-xs-12.col-sm-6
+            .brand.huge
+              FOOD VECTOR
+              .sub
+                by the
+                %a{href: 'http://foodrescuealliance.org', target: :_blank} food rescue alliance
 
-  .col-md-4
-    = render 'devise/sessions/login_form', resource_name: User
+          .col-xs-12.col-sm-5.col-sm-offset-1
+            %p.lead.text-right
+              %em
+                Identify food deserts at the street level using census population and income
+                data and the locations of healthy and unhealthy food sources
+
+        .row
+          .col-xs-12
+            = render 'devise/sessions/login_form', resource_name: User, horizontal: true
+
+      .callout.addon
+        .row
+          .col-xs-12.text-center.kc
+            %a{href: 'http://www.kyruscharities.org', target: :_blank}
+              %img{src: 'http://kyruscharities.org/wp-content/uploads/2014/10/kyrus-charities-logo1.png'}
+            %h3
+              %a{href: 'http://kyruscharities.org/2014/10/identifying-food-deserts-for-the-food-rescue-alliance/', target: :_blank} Learn more
+              about this
+              %a{href: 'http://www.kyruscharities.org', target: :_blank} Kyrus Charities
+              Accelerant Project&trade;

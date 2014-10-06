@@ -14,12 +14,183 @@
  *= require_tree .
  *= require_self
  */
-@import 'bootstrap';
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import url(http://fonts.googleapis.com/css?family=Montserrat:700,400|Open+Sans:400,600);
 
-body.food_sources.index {
-  li.food-source {
-    padding: 10px 0;
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: 'Montserrat', verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: 'Montserrat', verdana, arial, helvetica, sans-serif !important;
+}
+
+p, ol, ul, td {
+  font-family: 'Arial', arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+nav.navbar-default {
+  background-color: white;
+  //  background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
+  border-bottom: 2px solid #333;
+
+  .navbar-nav > li > a {
+    line-height: 45px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    &.no-padding {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
+
+  p, ol, ul, td {
+    // from FRA website
+    text-transform: uppercase;
+    font-family: 'Open Sans', verdana, arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 600;
+    letter-spacing: -0.300000011920929px;
+  }
+}
+
+.brand, nav.navbar-default .navbar-brand {
+  font-family: Montserrat, sans-serif;
+  font-size: 35px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  height: auto;
+  letter-spacing: -1px;
+  line-height: 31.5px;
+  margin-right: 50px;
+
+  &.huge {
+    font-size: 80px;
+    line-height: 75px;
+    margin-bottom: 50px;
+
+    .sub, .sub a {
+      line-height: 20px;
+    }
+  }
+
+  a {
+    color: #333;
+  }
+
+  .sub, .sub a {
+    font-size: 16px;
+    line-height: 10px;
+    letter-spacing: 1px;
+    margin-top: 5px;
+  }
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+div {
+  &.field, &.actions {
+    margin-bottom: 10px;
+  }
+}
+
+#notice {
+  color: green;
+}
+
+.alert-error {
+  @extend .alert-danger;
+}
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff;
+  }
+  ul li {
+    font-size: 12px;
+    list-style: square;
+  }
+}
+
+// make all images responsive by default
+img {
+  @extend .img-responsive;
+  margin: 0 auto;
+}
+
+// override for the 'Home' navigation link
+.navbar-brand {
+  font-size: inherit;
+}
+
+// THESE ARE EXAMPLES YOU CAN MODIFY
+// create your own classes
+// to make views framework-neutral
+.column {
+  @extend .col-md-6;
+  @extend .text-center;
+}
+
+form input.button {
+  @extend .btn;
+}
+
+form input.button[type=submit] {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+// apply styles to HTML elements
+// to make views framework-neutral
+main {
+  @extend .container;
+  padding-bottom: 80px;
+  margin-top: 76px; // accommodate the navbar
+}
+
+section {
+  @extend .row;
+  margin-top: 20px;
+}
+
+.button-xs {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-xs;
 }
 
 .flash-message {
@@ -58,4 +229,17 @@ form .form-group label.checkbox {
   img {
     max-width: none;
   }
+}
+
+.edit-icon, .delete-icon {
+  color: #ccc;
+  font-size: .9em;
+}
+
+.delete-icon:hover {
+  @extend .text-danger;
+}
+
+.edit-icon:hover {
+  @extend .text-info;
 }

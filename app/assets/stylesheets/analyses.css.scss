@@ -1,21 +1,100 @@
-// Place all the styles related to the Analyses controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'bootstrap';
 
-#map-controls {
-  background-color: white;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  padding: 7px;
-  border: 1px solid black;
-  label {
-    margin: 0 5px;
-    font-weight: normal;
-    font-size: .9em;
+body.analyses.index {
+  .analysis-block {
+    @extend .col-xs-12;
+    @extend .col-sm-6;
+    @extend .col-md-4;
+    padding-bottom: 60px;
+
+    .static-map {
+      width: 100%;
+    }
+  }
+
+  .start-new {
+    padding: 20px;
+    text-align: center;
+    font-family: 'Montserrat', verdana, arial, helvetica, sans-serif;
+    font-size: 25px;
+    border: 5px dashed #eeeeee;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fafafa;
+      border-style: solid;
+
+      // make it like a link
+      i, a {
+        color: #2a6496;
+      }
+    }
+
+    /* Extra small devices (phones, less than 768px) */
+    // default height
+
+    /* Small devices (tablets, 768px and up) */
+    @media (min-width: $screen-sm-min) {
+      height: 270px;
+      padding: 45px 30px;
+    }
+
+    /* Medium devices (desktops, 992px and up) */
+    @media (min-width: $screen-md-min) {
+      height: 229px;
+      padding: 25px 30px;
+    }
+
+    /* Large devices (large desktops, 1200px and up) */
+    @media (min-width: $screen-lg-min) {
+      height: 281px;
+      padding: 50px;
+    }
+
+    .plus {
+      display: block;
+      font-size: 4em;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
   }
 }
 
-.static-map {
-  width: 100%
+body.analyses.show {
+  #map-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding-top: 77px; // move all controls down below the navbar
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  #info {
+    position: absolute;
+    top: 107px;
+    right: 27px;
+    width: 270px;
+    border: 2px solid #333;
+    border-radius: 0;
+
+    #map-controls {
+      h5 {
+        margin-bottom: 10px;
+      }
+
+      label {
+        margin: 0 5px;
+        font-weight: normal;
+        font-size: .9em;
+      }
+    }
+  }
 }

@@ -1,12 +1,28 @@
+- horizontal ||= false
+
 .login-form
-  %h2.page-header Sign In
-  = simple_form_for :user, :as => resource_name, :url => session_path(resource_name), :defaults => {:input_html => {:class => 'form-control'}} do |f|
+  - if horizontal
+    = simple_form_for :user, :as => resource_name, :url => session_path(resource_name), :defaults => {:input_html => {:class => 'form-control'}} do |f|
+      .col-xs-12.col-md-4
+        = f.input :email, autofocus: true, label: false, placeholder: 'Email', input_html: {class: 'input-lg'}
+      .col-xs-12.col-md-4
+        .password.form-group
+          = f.input_field :password, placeholder: 'Password', class: 'input-lg'
+          %span.forgot
+            = link_to 'Forgot?', new_password_path(resource_name)
 
-    = f.input :email, autofocus: true, label: false, placeholder: 'Email', input_html: {class: 'input-lg'}
+      .col-xs-12.col-md-4
+        = f.submit 'Sign in', class: 'submit btn btn-lg btn-primary'
 
-    .password.form-group
-      = f.input_field :password, placeholder: 'Password', class: 'input-lg'
-      %span.forgot
-        = link_to 'Forgot?', new_password_path(resource_name)
+  - else
+    %h2.page-header Sign In
+    = simple_form_for :user, :as => resource_name, :url => session_path(resource_name), :defaults => {:input_html => {:class => 'form-control'}} do |f|
 
-    = f.submit 'Sign in', class: 'submit btn btn-lg btn-primary'
+      = f.input :email, autofocus: true, label: false, placeholder: 'Email', input_html: {class: 'input-lg'}
+
+      .password.form-group
+        = f.input_field :password, placeholder: 'Password', class: 'input-lg'
+        %span.forgot
+          = link_to 'Forgot?', new_password_path(resource_name)
+
+      = f.submit 'Sign in', class: 'submit btn btn-lg btn-primary'

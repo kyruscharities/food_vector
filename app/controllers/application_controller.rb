@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  check_authorization unless: :devise_controller?
+
   rescue_from CanCan::AccessDenied do |exception|
     # log the error
     Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
@@ -16,14 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    path = session[:user_return_to].to_s
-
-    # session[:user_return_to] is set somehow when a session expires
-    if session[:user_return_to].nil?
-      path = analyses_path
-    end
-
-    path
+    analyses_path
   end
 
   def after_sign_out_path_for(resource)

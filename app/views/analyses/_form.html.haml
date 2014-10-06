@@ -2,24 +2,33 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    = f.input :description
+    = f.input :name, autofocus: true, label: 'Give your analysis a name'
+    -# I'm not convinced descriptions are useful
+    -#= f.input :description, label: 'Optionally add more of a description'
     = f.hidden_field :user_id, value: current_user.id
+
+    = f.label 'Select a geographic region to analyze'
+    .help-block
+      Start by moving and zooming the map to the correct location, then
+      click the
+      %strong
+        -# stolen, err, borrowed from googlemaps
+        %span{style: 'display: inline-block; padding-top: 2px;'}
+          %div{style: 'width: 16px; height: 16px; overflow: hidden; position: relative;'}
+            %img{draggable: 'false', :src => 'http://maps.gstatic.com/mapfiles/drawing.png', :style => 'position: absolute; left: 0px; top: -15px; -webkit-user-select: none; border: 0px; padding: 0px; margin: 0px; width: 16px; height: 192px;'}/
+
+        square
+      and draw a rectangle over the region you want to analyze.
 
     %div{style: 'width: 100%; margin-bottom: 30px'}
       #map{style: 'width: 100%; height: 400px;'}
 
-    = f.simple_fields_for :geo_region do |gr|
-      .row
-        .col-xs-12.col-md-6
-          = gr.input :nw_lat, as: :numeric, label: 'NW latitude (decimal degrees)', input_html: { min: -85, max: 85}
-        .col-xs-12.col-md-6
-          = gr.input :nw_lon, as: :numeric, label: 'NW longitude (decimal degrees)', input_html: { min: -180, max: 180                                 }
-      .row
-        .col-xs-12.col-md-6
-          = gr.input :se_lat, as: :numeric, label: 'SE latitude (decimal degrees)', input_html: { min: -85, max: 85}
-        .col-xs-12.col-md-6
-          = gr.input :se_lon, as: :numeric, label: 'SE longitude (decimal degrees)',input_html: {  min: -180, max: 180}
+    .hide
+      = f.simple_fields_for :geo_region do |gr|
+        = gr.input :nw_lat, as: :numeric
+        = gr.input :nw_lon, as: :numeric
+        = gr.input :se_lat, as: :numeric
+        = gr.input :se_lon, as: :numeric
 
   .form-actions
-    = f.button :submit, 'Run Analysis'
+    = f.button :submit

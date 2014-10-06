@@ -1,20 +1,12 @@
 %section
-  .col-md-12
-    %h1.page-header
-      Food Sources
-      %span.pull-right
-        = link_to 'Add a food source', new_resource_path, class: 'btn btn-primary'
+  .col-xs-12.col-sm-6.col-md-5
+    %h3.page-header
+      %strong.text-success Healthy
+      food sources
+    = render 'food_source_list', collection: collection.where(healthy: true), is_healthy: true
 
-    - if collection.empty?
-      .alert.alert-info
-        No food sources have been recorded
-
-    - else
-      .row
-        .col-xs-12.col-md-6
-          %h3.page-header Healthy
-          = render 'food_source_list', collection: collection.where(healthy: true)
-
-        .col-xs-12.col-md-6
-          %h3.page-header Unhealthy
-          = render 'food_source_list', collection: collection.where(healthy: false)
+  .col-xs-12.col-sm-6.col-md-5.col-md-offset-1
+    %h3.page-header
+      %strong.text-danger Unhealthy
+      food sources
+    = render 'food_source_list', collection: collection.where(healthy: false), is_healthy: false

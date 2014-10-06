@@ -1,0 +1,49 @@
+@import 'bootstrap';
+
+body.static_pages.home {
+  background: image-url('map-bg.jpg') no-repeat center center fixed;
+
+  .callout {
+    background-color: white;
+    border: 2px solid #333;
+    padding: 30px;
+
+    /* Extra small devices (phones, less than 768px) */
+    margin-top: 20px;
+
+    /* Small devices (tablets, 768px and up) */
+    @media (min-width: $screen-sm-min) {
+      margin-top: 10vh;
+    }
+
+    /* Medium devices (desktops, 992px and up) */
+    @media (min-width: $screen-md-min) {
+      margin-top: 20vh;
+    }
+
+    /* Large devices (large desktops, 1200px and up) */
+    @media (min-width: $screen-lg-min) {
+      margin-top: 20vh;
+    }
+
+    &.addon {
+      margin: 0 0 30px;
+      border-top: none;
+    }
+
+    p.lead {
+      line-height: 1.6em;
+    }
+  }
+
+  .kc {
+    img {
+      max-width: 80%;
+    }
+
+    h3 {
+      margin-bottom: 0;
+      font-size: 1.7em;
+    }
+  }
+}

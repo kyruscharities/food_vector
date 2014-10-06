@@ -1,16 +1,19 @@
 %ul.list-unstyled
+  %li
+    = simple_form_for :food_source do |f|
+      .input-group
+        = f.input_field :business_name, placeholder: 'Ex: Safeway'
+        = f.input :healthy, as: :hidden, input_html: { value: is_healthy }
+        %span.input-group-btn
+          = f.button :submit, 'add new food source'
+
   - collection.order(:business_name).each do |resource|
     %li.food-source
-      = link_to resource.business_name, resource
+      = link_to edit_food_source_path(resource), class: 'edit-icon' do
+        %i.fa.fa-pencil
 
-      .pull-right
-        - if resource.healthy?
-          .label.label-success Healthy
-        - else
-          .label.label-danger Unhealthy
+      = link_to resource, class: 'delete-icon', method: :delete, data: { confirm: 'Are you sure?' } do
+        %i.fa.fa-trash
 
-        = link_to edit_food_source_path(resource), class: 'btn btn-default btn-xs' do
-          %i.fa.fa-pencil
-
-        = link_to resource, method: :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-xs' do
-          %i.fa.fa-trash
+      %span{style: 'margin-left: 10px'}
+        = link_to resource.business_name, resource
