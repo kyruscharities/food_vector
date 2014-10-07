@@ -6,12 +6,14 @@ class AnalysisGeoRegionScore < ActiveRecord::Base
   validates_presence_of :analysis
 
   def as_json(options = {})
-    options.merge! include: :geo_region
-    super(options)
+    super(options.merge! include: :geo_region)
   end
 
   def calculate_risk_score
-    AnalysisWorker::GeoRegionRiskScoreCalculatorWorker.perform_async self.id
+    # do this inline right now because we don't really need a second
+    # job to calculate this - it's only called from within the
+    # "ensure census data" worker
+    AnalysisWorker::GeoRegionRiskScoreCalculatorWorker.new.perform self.id
   end
 
   def ensure_income_data

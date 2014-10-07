@@ -24,3 +24,9 @@ Run the server
     bin/rails server
 
 Navigate to `localhost:3000`
+
+# Live configuration
+
+    RISK_SCORE_MILES_UNTIL_GIVING_UP = 3
+
+    RISK_SCORE_PCT_FATHER_WILLING_TO_GO_PAST_BAD = 30.0

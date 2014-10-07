@@ -1,6 +1,6 @@
-class RiskScore
+module RiskScore
 
-  def coerce(score)
+  def self.coerce(score)
     if score > 100
       return 100
     end
@@ -10,7 +10,7 @@ class RiskScore
     return score.round
   end
 
-  def usda_approximate_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
+  def self.usda_approximate_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
     if poverty_rate > 0.20 and miles_to_healthy_source > 1
       return 100
     else
@@ -18,20 +18,20 @@ class RiskScore
     end
   end
 
-  def simple_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
+  def self.simple_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
     # WolframAlpha: Plot[Min[333*p+33.4*d, 100], {p, 0,0.5}, {d, 0, 3}]
     score = 333 * poverty_rate + 33.4 * miles_to_healthy_source
     return coerce(score)
   end
 
-  def jake_and_chris_unscientific_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
+  def self.jake_and_chris_unscientific_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
     # (poverty_rate * 100) + (((miles_to_healthy_source - miles_to_unhealthy_source) / [miles_to_healthy_source, miles_to_unhealthy_source].max) * 50)
     puts "poverty_rate: #{poverty_rate * 100}"
     puts "distance difference: #{((miles_to_healthy_source - miles_to_unhealthy_source)) * 50}"
     (poverty_rate * 100) + (((miles_to_healthy_source - miles_to_unhealthy_source)) * 50)
   end
 
-  def weighted_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
+  def self.weighted_risk_score(poverty_rate, miles_to_healthy_source, miles_to_unhealthy_source)
     distance_max = 5
 
     pr_weight = 0.50
@@ -48,15 +48,18 @@ class RiskScore
     ((poverty_rate * pr_weight) + (miles_to_healthy_source * h_weight) + (miles_to_unhealthy_source * u_weight)) * 100
   end
 
-  def game_theory_risk_score(individuals_below_poverty_line, miles_to_healthy_source, miles_to_unhealthy_source)
-    if miles_to_healthy_source > 3 || miles_to_healthy_source > miles_to_unhealthy_source * 1.3
+  def self.game_theory_risk_score(individuals_below_poverty_line, miles_to_healthy_source, miles_to_unhealthy_source)
+    miles_until_giving_up = ENV.fetch('RISK_SCORE_MILES_UNTIL_GIVING_UP', 3).to_i
+    pct_farther_willing_to_go_past_bad = ENV.fetch('RISK_SCORE_PCT_FATHER_WILLING_TO_GO_PAST_BAD', 30.0).to_f
+
+    if miles_to_healthy_source > miles_until_giving_up || miles_to_healthy_source > miles_to_unhealthy_source * (1 + (pct_farther_willing_to_go_past_bad / 100.0))
       individuals_below_poverty_line
     else
       0
     end
   end
 
-  # def game_theory_risk_score_with_income_tiers(individuals_by_income_tiers, miles_to_healthy_source, miles_to_unhealthy_source)
+  # def self.game_theory_risk_score_with_income_tiers(individuals_by_income_tiers, miles_to_healthy_source, miles_to_unhealthy_source)
   #   with_cars = 0
   #   without_cars = 0
   #
